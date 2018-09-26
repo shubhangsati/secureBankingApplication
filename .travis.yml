@@ -9,4 +9,5 @@ install:
 
 # command to run tests
 script:
+  - pycodestyle
   - python tests.py

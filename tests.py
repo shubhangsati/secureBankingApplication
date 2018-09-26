@@ -1,6 +1,7 @@
 from app import app
 import unittest
 
+
 class FlaskTestCase(unittest.TestCase):
 
     def test_server(self):
