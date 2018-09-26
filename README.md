@@ -3,8 +3,8 @@
 [![Build Status](https://travis-ci.com/shubhangsati/secureBankingApplication.svg?token=csQdajwAqfy1MdL49VaC&branch=master)](https://travis-ci.com/shubhangsati/secureBankingApplication)
 
 ## Initial setup
-1. Clone the repository
-2. Install virtualenv: `(sudo) pip install virtualenv` (sudo if required)
+1. Clone the repository.
+2. Install virtualenv: `(sudo) pip install virtualenv` (sudo if required).
 3. `cd <repository-path>`
 4. `virtualenv venv -p python2.7`
 5. `source venv/bin/activate`
@@ -14,10 +14,10 @@
 1. Activate virtual environment: `source venv/bin/activate`
 2. `git checkout master`
 3. `git pull`
-4. Create a new working branch: `git checkout -tb <new-working-branch-name>`
+4. Create a new working branch: `git checkout -tb <new-working-branch-name>`.
 
 ## Before pushing your changes
-1. cd into the root directory and run `pycodestyle`. This will check for linting errors; fix them before pushing.
+1. cd into project's root directory and run `./lint.sh`. It should fix most linting errors.
 2. Run `python tests.py`.
 3. If everything passes, push your changes.
 
