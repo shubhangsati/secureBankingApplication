@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.com/shubhangsati/secureBankingApplication.svg?token=csQdajwAqfy1MdL49VaC&branch=master)](https://travis-ci.com/shubhangsati/secureBankingApplication)
 
+## To start the server
+python app.py
+
 ## Initial setup
 1. Clone the repository.
 2. Install virtualenv: `(sudo) pip install virtualenv` (sudo if required).
