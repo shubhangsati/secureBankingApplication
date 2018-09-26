@@ -10,6 +10,12 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(b'It works!' in response.data)
 
+    def test_index(self):
+        tester = app.test_client(self)
+        response = tester.get("/", content_type="html/text")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(b'Secure Banking Application' in response.data)
+
 
 if __name__ == "__main__":
     unittest.main()
