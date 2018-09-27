@@ -24,7 +24,7 @@ python app.py
 2. Run `python tests.py`.
 3. If everything passes, push your changes.
 
-## To push your changes
+## To push your changes-
 1. Make sure you are in the new branch you created. You can check the current working branch using `git branch`.
 2. `git add .`
 3. `git commit -m "<commit-message>"`
