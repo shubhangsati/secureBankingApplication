@@ -48,7 +48,7 @@ def login():
 def logout():
     session.pop('logged_in', None)
     flash("You were just logged out!")
-    return ""
+    return redirect(url_for('index'))
 
 
 if __name__ == "__main__":
