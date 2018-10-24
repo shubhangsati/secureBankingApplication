@@ -20,7 +20,7 @@ sudo apt-get -y update
 sudo apt-get -y install cassandra
 
 # install required modules
-pip install -r requirements.txt --install-option="--no-cython"
+pip install -r requirements.txt
 
 # enable and start cassandra service and wait for 5 seconds
 sudo service cassandra start
