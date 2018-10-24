@@ -20,11 +20,11 @@ sudo apt-get -y update
 sudo apt-get -y install cassandra
 
 # install required modules
-pip install -r requirements.txt
+CASS_DRIVER_BUILD_CONCURRENCY=8 pip install -r requirements.txt
 
-# enable and start cassandra service and wait for 5 seconds
+# enable and start cassandra service and wait for 30 seconds
 sudo service cassandra start
-sleep 10
+sleep 30
 
 # create Keyspace and add admin credentials
 python db_create.py
