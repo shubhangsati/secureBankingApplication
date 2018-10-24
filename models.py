@@ -1,5 +1,8 @@
-from app import db
+# from app import db
+from flask_cqlalchemy import CQLAlchemy
 import uuid
+
+db = CQLAlchemy()
 
 
 class User(db.Model):

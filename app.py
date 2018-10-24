@@ -1,13 +1,13 @@
 import uuid
 from flask import Flask, render_template, request, url_for, redirect, session, flash
-from flask_cqlalchemy import CQLAlchemy
 from functools import wraps
+from models import db, User
 import hashlib
 import models
 
 app = Flask(__name__)
 app.config.from_object("config.BaseConfig")
-db = CQLAlchemy(app)
+db.init_app(app)
 
 
 def login_required(f):
