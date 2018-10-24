@@ -1,8 +1,10 @@
 # code to create table
 
-from app import db
-from models import User
+from app import app
+from models import db, User
 from hashlib import sha256
+
+db.init_app(app)
 
 db.create_keyspace_simple('SBS', 1)
 
