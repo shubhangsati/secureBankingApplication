@@ -13,7 +13,7 @@ sudo apt-get -y install oracle-java8-installer
 # sudo sed -i 's|J_DIR=jdk1.8.0_181|J_DIR=jdk1.8.0_191|' oracle-java8-installer.*
 
 # install required modules
-pip install cassandra-driver --install-option="--no-cython"
+CASS_DRIVER_NO_CYTHON=1 pip install flask-cqlalchemy
 pip install -r requirements.txt
 
 # install cassandra
