@@ -12,16 +12,16 @@ sudo apt-get -y install oracle-java8-installer
 # sudo sed -i 's|SHA256SUM_TGZ="1845567095bfbfebd42ed0d09397939796d05456290fb20a83c476ba09f991d3"|SHA256SUM_TGZ="53c29507e2405a7ffdbba627e6d64856089b094867479edc5ede4105c1da0d65"|' oracle-java8-installer.*
 # sudo sed -i 's|J_DIR=jdk1.8.0_181|J_DIR=jdk1.8.0_191|' oracle-java8-installer.*
 
+# install required modules
+pip install cassandra-driver --install-option="--no-cython"
+pip install -r requirements.txt
+
 # install cassandra
 echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
 curl https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
 sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-key A278B781FE4B2BDA
 sudo apt-get -y update
 sudo apt-get -y install cassandra
-
-# install required modules
-pip install -r requirements.txt
-pip install cassandra-driver --install-option="--no-cython"
 
 # enable and start cassandra service and wait for 30 seconds
 sudo service cassandra start
