@@ -1,10 +1,19 @@
 .turuncubaslik-bold {
-  color:#333;
+  color:#E4FFFD;
 font-size:14px;
  border-bottom: 1px dotted #000;
     text-decoration: none;  
   }
 /******keyboard*******/
+
+.row {
+  max-width: 350px;
+  min-height: 400px;
+  margin-top: 80px;
+  margin-left: 5px;
+  background: rgba(255, 255, 255, 0.3);
+
+}
 
 ul.keyboard {
   list-style-type: none;
@@ -22,9 +31,9 @@ ul.keyboard {
   float: left;
   height: 18%;
  /** margin: auto; **/
-  line-height: 50px;
+  line-height: 30px;
   padding: 0;
-  margin: 0.3% 0.6% 0.6% 0.2%;
+  margin: 0.3% 0.3% 0.6% 0.2%;
   background-color: #ddd;
   color: black;
   vertical-align: middle;
@@ -40,7 +49,7 @@ ul.keyboard {
 }
 
 .char {
-    width: 5.75%;
+    width: 6%;
     -webkit-transition: background-color 100ms;
 }
 
@@ -61,7 +70,7 @@ ul.keyboard {
 }
 
 .capslock {
-  width: 12%
+  width: 13%
 }
 
 .capslock.on {
@@ -81,7 +90,7 @@ ul.keyboard {
 }
 
 .space {
-  width: 99%;
+  width: 98%;
 }
 
 .keyboard .touch {
