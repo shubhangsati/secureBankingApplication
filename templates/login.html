@@ -10,17 +10,13 @@
     </head>
 
 <!--  -->
-    <div class="container">
-	 <div class="row">
-	   <div class=" col-sm-2 col-md-2 col-lg-1" style="padding:35px;">
-	    </div>
-	 </div>    
-	</div> 
+
+<body background="{{ url_for('static', filename='abc.jpg') }}">
 
 <!--  -->
     <div class="container">
-        <div class="row" style="background-color:#FFF">
-    <div class="col-sm-5 col-md-5 col-lg-5 form-group"><form action="#" method="post">
+        <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 form-group"><form action="#" method="post">
     <input type="hidden" value="1" name="kontrol">
     <h3 class="turuncubaslik-bold"><span class="glyphicon glyphicon-lock"></span>LOGIN</h3>
     <br>
@@ -120,3 +116,5 @@
     <script  src="{{ url_for('static', filename='js/keyboard.js') }}"></script>
 </body>
 </html>
+
+<!-- https://ideas.nationalbank.ca/10-good-reasons-for-using-online-banking/ -->
