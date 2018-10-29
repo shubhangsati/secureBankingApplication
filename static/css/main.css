@@ -1,0 +1,144 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100);
+nav {
+  background-color: #094A70; }
+
+.top-nav .brand-logo img {
+  height: 50px;
+  widows: 100%;
+  margin-top: 5px; }
+
+.lower-nav {
+  background-color: #083853; }
+  .lower-nav .nav-wrapper {
+    clear: both; }
+
+.side-nav {
+  margin-top: 0; }
+  .side-nav .logo {
+    height: 90px; }
+    .side-nav .logo .brand-logo {
+      width: 100%;
+      color: #fff;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-top: 5px; }
+  .side-nav li {
+    border-top: 1px solid #fff; }
+  .side-nav .first-list {
+    border-top: none; }
+
+footer.page-footer {
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding-top: 0;
+  background-color: #083853; }
+
+.card-action {
+  bottom: 0;
+  position: fixed;
+  width: 100%; }
+  .card-action .acct-view {
+    width: 100%;
+    background-color: #09365D; }
+
+.card {
+  min-height: 260px;
+  height: 260px;
+  overflow: hidden;
+  border-top: 2px solid #dcad18;
+  z-index: 2; }
+  .card .card-header {
+    background-color: #083853;
+    padding: 8px;
+    color: #fff; }
+  .card .card-content {
+    padding: 8px;
+    margin-top: 0; }
+    .card .card-content .transfer-details i {
+      width: 2rem;
+      font-size: 1.6rem;
+      line-height: 3rem;
+      display: block;
+      float: left;
+      text-align: center;
+      color: #606060; }
+    .card .card-content .transfer-details span {
+      color: #606060; }
+    .card .card-content .transfer-details .transfer-header {
+      display: block;
+      min-height: 3rem;
+      line-height: 3rem; }
+  .card .card-action {
+    padding: 10px 20px; }
+
+.quickAcct .card-panel {
+  background-color: #F5F5F5; }
+
+html {
+  -webkit-font-smoothing: antialiased; }
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
+
+header, main, footer {
+  padding-left: 240px; }
+
+.side-nav {
+  background-color: #044368; }
+  .side-nav .bold a {
+    color: #fff; }
+  .side-nav .first-list {
+    margin-top: 40px; }
+
+.side-nav.fixed li {
+  line-height: 44px; }
+  .side-nav.fixed li a {
+    font-size: 13px;
+    line-height: 44px;
+    height: 44px; }
+
+.btn-pro1 {
+  background-color: #f5f5f5;
+  color: #262732;
+  font-size: 18px; }
+
+main {
+  background-color: #044368; }
+  main .detail-headings {
+    color: #fff;
+    font-weight: 300; }
+
+.quickAcct {
+  margin-bottom: 20px; }
+  .quickAcct .card-panel .input-field input {
+    border: 1px solid #BBBBBB;
+    box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.1);
+    color: #d1d1d1; }
+  .quickAcct .card-panel .input-field label {
+    font-size: 18px;
+    color: #262732;
+    left: 0; }
+  .quickAcct .card-panel .input-field .select-wrapper + label {
+    top: -26px; }
+  .quickAcct .card-panel .input-field .select-wrapper span.caret {
+    color: #333; }
+  .quickAcct .quick-btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 0 10px;
+    margin-top: 20px;
+    background-color: #09365D;
+    z-index: 0; }
+
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 95%; } }
+@media only screen and (max-width: 992px) {
+  header, main, footer {
+    padding-left: 0; } }
