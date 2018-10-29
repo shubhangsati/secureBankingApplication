@@ -1,98 +1,65 @@
-.turuncubaslik-bold {
-  color:#E4FFFD;
-font-size:14px;
- border-bottom: 1px dotted #E4FFFD;
-    text-decoration: none;  
-  }
-/******keyboard*******/
-
-.row {
-  max-width: 350px;
-  min-height: 400px;
-  margin-top: 80px;
-  margin-left: 5px;
-  background: rgba(255, 255, 255, 0.3);
-
+.jkeyboard {
+  display: inline-block;
 }
-
-ul.keyboard {
-  list-style-type: none;
-  font-family: verdana;
-  background-color: #fff;
-  border-radius: 5px;
+.jkeyboard, .jkeyboard .jline, .jkeyboard .jline ul {
+  display: block;
+  margin: 0;
   padding: 0;
-  width: 100%;
-  height: 50%;
 }
-
-.keyboard li {
-  cursor: pointer;
-  display: inline;
-  float: left;
-  height: 18%;
- /** margin: auto; **/
-  line-height: 30px;
-  padding: 0;
-  margin: 0.3% 0.3% 0.6% 0.2%;
-  background-color: #ddd;
-  color: black;
-  vertical-align: middle;
+.jkeyboard .jline {
   text-align: center;
-  border-radius: 4px;
-  font-size: 1vw;
+  margin-left: -14px;
+}
+.jkeyboard .jline ul li {
+  font-family: arial, sans-serif;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #468db3;
+  -webkit-box-shadow: 0 0 3px #468db3;
+  -webkit-box-shadow: inset 0 0 3px #468db3;
+  margin: 10px 0 1px 5px;
+  color: #000;
+  border-radius: 5px;
+  width: 26px;
+  height: 26px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 26px;
+  overflow: hidden;
+  cursor: pointer;
   -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.jkeyboard .jline ul li.uppercase {
+  text-transform: uppercase;
+}
+.jkeyboard .jline ul li:hover, .jkeyboard .jline ul li.active {
+  background-color: #185a82;
+  color: whitesmoke;
+}
+.jkeyboard .jline .return {
+  width: 60px;
+}
+.jkeyboard .jline .space {
+  width: 228px;
+}
+.jkeyboard .jline .numeric_switch {
+  width: 42px;
+}
+.jkeyboard .jline .layout_switch {
+  background: url("../images/Vkeyboard/locale.png") no-repeat center right;
+}
+.jkeyboard .jline .shift {
+  width: 50px;
+  background: url("../images/Vkeyboard/shift.png") no-repeat center center;
+}
+.jkeyboard .jline .backspace {
+  width: 35px;
+  background: url("../images/Vkeyboard/backspace.png") no-repeat center center;
 }
 
-.char {
-    width: 6%;
-    -webkit-transition: background-color 100ms;
-}
-
-.tab {
-  width: 20%;
-}
-
-.at {
-  width: 7.2%;
-}
-
-.last {
-  margin-right: 0%;
-}
-
-.backspace {
-  width: 14%;
-}
-
-.capslock {
-  width: 13%
-}
-
-.capslock.on {
-  background-color: #CA4200;
-}
-
-.return {
-  width: 14%;
-}
-
-.shift {
-  width: 7.2%;
-}
-
-.last {
-  margin-right: 0;
-}
-
-.space {
-  width: 98%;
-}
-
-.keyboard .touch {
-  background-color: #CA4200;
-}
+/* https://github.com/javidan/jkeyboard */
