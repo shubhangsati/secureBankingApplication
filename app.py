@@ -4,7 +4,8 @@ from functools import wraps
 from models import db, User
 import hashlib
 import models
-import requests, json
+import requests
+import json
 
 # create a new Flask app
 app = Flask(__name__)
@@ -12,9 +13,11 @@ app = Flask(__name__)
 app.config.from_object("config.BaseConfig")
 # initialize database
 db.init_app(app)
-app.secret_key = "random";
+app.secret_key = "random"
 # this function will be called whenever it is
 # required to be logged in to be able to view a page
+
+
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -72,13 +75,14 @@ def login():
             flash("Sorry ! Bots are not allowed.")
             return redirect(url_for('login'))
 
-       
     return render_template('login.html', error=error, sitekey=sitekey)
+
 
 def verify_captcha(captcha_response):
     secret = "6LcSb3cUAAAAACi3usSfmugL4L94lt0plD6Yb5Vv"
-    payload = {'response':captcha_response, 'secret':secret}
-    response = requests.post("https://www.google.com/recaptcha/api/siteverify", payload)
+    payload = {'response': captcha_response, 'secret': secret}
+    response = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify", payload)
     response_text = json.loads(response.text)
     return response_text['success']
 
