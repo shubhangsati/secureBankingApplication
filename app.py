@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.config.from_object("config.BaseConfig")
 # initialize database
 db.init_app(app)
-app.secret_key = "random"
+# app.secret_key = "random"
 # this function will be called whenever it is
 # required to be logged in to be able to view a page
 
@@ -50,7 +50,7 @@ def login():
 
     # error string
     error = None
-    sitekey = "6LcSb3cUAAAAAF8NkmVESlCeODt-7F9qUmYaqKXy"
+    # sitekey = "6LcSb3cUAAAAAF8NkmVESlCeODt-7F9qUmYaqKXy"
     if request.method == 'POST':
         # get username and password from form
         unameInput = request.form['username']
@@ -72,10 +72,11 @@ def login():
                 flash("You were just logged in!")
                 return redirect(url_for('index'))
         else:
-            flash("Sorry ! Bots are not allowed.")
+            flash("Invalid CAPTCHA!")
             return redirect(url_for('login'))
 
-    return render_template('login.html', error=error, sitekey=sitekey)
+    return render_template('login.html', error=error,
+                           sitekey=app.config['SITE_KEY'])
 
 
 def verify_captcha(captcha_response):
