@@ -21,7 +21,7 @@
 
 ## Before pushing your changes
 1. cd into project's root directory and run `./lint.sh`. It should fix most linting errors.
-2. Run `python tests.py`.
+2. Run `./test.sh`.
 3. If everything passes, push your changes.
 
 ## To push your changes-
