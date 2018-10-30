@@ -4,6 +4,7 @@ from functools import wraps
 from models import db, User
 import hashlib
 import models
+import requests, json
 
 # create a new Flask app
 app = Flask(__name__)
@@ -11,8 +12,7 @@ app = Flask(__name__)
 app.config.from_object("config.BaseConfig")
 # initialize database
 db.init_app(app)
-
-
+app.secret_key = "random";
 # this function will be called whenever it is
 # required to be logged in to be able to view a page
 def login_required(f):
@@ -47,25 +47,40 @@ def login():
 
     # error string
     error = None
+    sitekey = "6LcSb3cUAAAAAF8NkmVESlCeODt-7F9qUmYaqKXy"
     if request.method == 'POST':
         # get username and password from form
         unameInput = request.form['username']
         passInput = request.form['password']
-        # get row from database
-        row = models.User.objects(username=unameInput)
-        # if row count is 0 or password input from form
-        # is not the same as that stored in the database return error
-        if row.count() == 0 or hashlib.sha256(
-                passInput).hexdigest() != row[0].password:
-            error = 'Invalid credentials. Please try again.'
+        captcha_response = request.form['g-recaptcha-response']
+        if verify_captcha(captcha_response):
+            # get row from database
+            row = models.User.objects(username=unameInput)
+            # if row count is 0 or password input from form
+            # is not the same as that stored in the database return error
+            if row.count() == 0 or hashlib.sha256(
+                    passInput).hexdigest() != row[0].password:
+                error = 'Invalid credentials. Please try again.'
 
-        # else log in successful
+            # else log in successful
+            else:
+                session['logged_in'] = True
+                session['username'] = unameInput
+                flash("You were just logged in!")
+                return redirect(url_for('index'))
         else:
-            session['logged_in'] = True
-            session['username'] = unameInput
-            flash("You were just logged in!")
-            return redirect(url_for('index'))
-    return render_template('login.html', error=error)
+            flash("Sorry ! Bots are not allowed.")
+            return redirect(url_for('login'))
+
+       
+    return render_template('login.html', error=error, sitekey=sitekey)
+
+def verify_captcha(captcha_response):
+    secret = "6LcSb3cUAAAAACi3usSfmugL4L94lt0plD6Yb5Vv"
+    payload = {'response':captcha_response, 'secret':secret}
+    response = requests.post("https://www.google.com/recaptcha/api/siteverify", payload)
+    response_text = json.loads(response.text)
+    return response_text['success']
 
 # logout route
 
