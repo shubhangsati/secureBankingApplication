@@ -9,5 +9,4 @@ install:
 
 # command to run tests
 script:
-  - pycodestyle --max-line-length=100
-  - python tests.py
+  - ./test.sh
