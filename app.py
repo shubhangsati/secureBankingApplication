@@ -10,7 +10,7 @@ import json
 # create a new Flask app
 app = Flask(__name__)
 # load configurations from config.py
-app.config.from_object("config.BaseConfig")
+app.config.from_object("config.DevelopmentConfig")
 # initialize database
 db.init_app(app)
 # app.secret_key = "random"
