@@ -48,12 +48,9 @@ def login():
     # check if user is logged in
     # load index page if user is logged in
     # Todo: add more checks
-    if 'logged_in' in session and session['logged_in']:
-        return redirect(url_for("index"))
 
     # error string
     error = None
-    # sitekey = "6LcSb3cUAAAAAF8NkmVESlCeODt-7F9qUmYaqKXy"
     if request.method == 'POST':
         # get username and password from form
         unameInput = request.form['username']
@@ -112,14 +109,14 @@ def setup():
     if request.method == 'POST':
         token = request.form['token']
         current_user = session['username']
+        destroy_session()
         row = models.User.objects(username=current_user)[0]
         check_otp = row.otp_secret
         totp = pyotp.TOTP(check_otp)
         if(totp.verify(token)):
             row.otp_enabled = True
             row.save()
-            destroy_session()
-            return redirect(url_for('login'))
+            # return redirect(url_for('login'))
         else :
             flash("Invalid Otp!! Verification Unsuccessful. Try again")
             return redirect(url_for('setup'))
@@ -133,15 +130,6 @@ def setup():
 @login_required
 def qrcode():
     current_user = session['username']
-    # row = models.User.objects(username=current_user)
-    # if row.count() == 0:
-    #     abort(404)
-
-    # # for added security, remove username from session
-    # # del session['username']
-    # session.pop('logged_in', None)
-    # session.pop('username', None)
-
 
     # render qrcode for google authenticator
     url = pyqrcode.create(get_totp_uri(current_user))
@@ -156,7 +144,6 @@ def qrcode():
 def get_totp_uri(current_user):
     secret_base32 = pyotp.random_base32()
     totp = pyotp.TOTP(secret_base32)
-    #write this in the database
     row = models.User.objects(username=current_user)[0]
     row.otp_secret = secret_base32
     row.save()
