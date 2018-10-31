@@ -73,13 +73,37 @@ def login():
                 session['logged_in'] = True
                 session['username'] = unameInput
                 flash("You were just logged in!")
-                return redirect(url_for('setup'))
+                if row[0].otp_secret == None :
+                    return redirect(url_for('setup'))
+                else :
+                    return redirect(url_for('two_way_login'))
         else:
             flash("Invalid CAPTCHA!")
             return redirect(url_for('login'))
 
     return render_template('login.html', error=error,
                            sitekey=app.config['SITE_KEY'])
+
+
+
+@app.route('/two_way_login', methods=["GET", "POST"])
+@login_required
+def two_way_login():
+    if request.method == 'POST':
+        token = request.form['token']
+        current_user = session['username']
+        row = models.User.objects(username=current_user)
+        check_otp = row[0].otp_secret
+        totp = pyotp.TOTP(check_otp)
+        if(totp.verify(token)):
+            return redirect(url_for('index'))
+        else :
+            flash("Invalid Otp! Try again")
+            return redirect(url_for('two_way_login'))
+
+
+    return render_template('two_way_login.html')
+
 
 
 @app.route('/setup')
@@ -119,6 +143,10 @@ def get_totp_uri(current_user):
     secret_base32 = pyotp.random_base32()
     totp = pyotp.TOTP(secret_base32)
     #write this in the database
+    row = models.User.objects(username=current_user)[0]
+    row.otp_secret = secret_base32
+    row.save()
+
     return 'otpauth://totp/2FA-Demo:{0}?secret={1}&issuer=2FA-Demo' \
             .format(current_user, secret_base32)
     

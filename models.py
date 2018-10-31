@@ -8,7 +8,7 @@ class User(db.Model):
     uid = db.columns.UUID(primary_key=True, default=uuid.uuid4)
     username = db.columns.Text(partition_key=True, required=True)
     password = db.columns.Text(required=True)
-    # otp_secret = db.columns.Text(required=True)
+    otp_secret = db.columns.Text()
 
 
 class Account(db.Model):
