@@ -48,9 +48,8 @@ def clean(x):
 
 
 def check_amount(x):
-    x = clean(x)
     flag = False
-    if x > 0 and isinstance(x, int):
+    if x > 0 and x < 999999999 and isinstance(x, int):
         flag = True
     return flag
 
