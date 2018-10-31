@@ -1,12 +1,214 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+{% endblock %}
+
 {% block content %}
 <div class="container" 
-style="margin-top: 10%; background: rgba(0, 0, 0, 0.1); padding: 40px; border-radius: 10px;">
+style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-radius: 10px;">
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            
+        <div class="col-sm-6 col-md-3 col-lg-3 menu-item tab active" tab="account">
+            <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDM1MCAzNTA7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4Ij4KPGc+Cgk8cGF0aCBkPSJNMTc1LDE3MS4xNzNjMzguOTE0LDAsNzAuNDYzLTM4LjMxOCw3MC40NjMtODUuNTg2QzI0NS40NjMsMzguMzE4LDIzNS4xMDUsMCwxNzUsMHMtNzAuNDY1LDM4LjMxOC03MC40NjUsODUuNTg3ICAgQzEwNC41MzUsMTMyLjg1NSwxMzYuMDg0LDE3MS4xNzMsMTc1LDE3MS4xNzN6IiBmaWxsPSIjRDgwMDI3Ii8+Cgk8cGF0aCBkPSJNNDEuOTA5LDMwMS44NTNDNDEuODk3LDI5OC45NzEsNDEuODg1LDMwMS4wNDEsNDEuOTA5LDMwMS44NTNMNDEuOTA5LDMwMS44NTN6IiBmaWxsPSIjRDgwMDI3Ii8+Cgk8cGF0aCBkPSJNMzA4LjA4NSwzMDQuMTA0QzMwOC4xMjMsMzAzLjMxNSwzMDguMDk4LDI5OC42MywzMDguMDg1LDMwNC4xMDRMMzA4LjA4NSwzMDQuMTA0eiIgZmlsbD0iI0Q4MDAyNyIvPgoJPHBhdGggZD0iTTMwNy45MzUsMjk4LjM5N2MtMS4zMDUtODIuMzQyLTEyLjA1OS0xMDUuODA1LTk0LjM1Mi0xMjAuNjU3YzAsMC0xMS41ODQsMTQuNzYxLTM4LjU4NCwxNC43NjEgICBzLTM4LjU4Ni0xNC43NjEtMzguNTg2LTE0Ljc2MWMtODEuMzk1LDE0LjY5LTkyLjgwMywzNy44MDUtOTQuMzAzLDExNy45ODJjLTAuMTIzLDYuNTQ3LTAuMTgsNi44OTEtMC4yMDIsNi4xMzEgICBjMC4wMDUsMS40MjQsMC4wMTEsNC4wNTgsMC4wMTEsOC42NTFjMCwwLDE5LjU5MiwzOS40OTYsMTMzLjA4LDM5LjQ5NmMxMTMuNDg2LDAsMTMzLjA4LTM5LjQ5NiwxMzMuMDgtMzkuNDk2ICAgYzAtMi45NTEsMC4wMDItNS4wMDMsMC4wMDUtNi4zOTlDMzA4LjA2MiwzMDQuNTc1LDMwOC4wMTgsMzAzLjY2NCwzMDcuOTM1LDI5OC4zOTd6IiBmaWxsPSIjRDgwMDI3Ii8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
+            <br>
+            <span>Account/Profile</span>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 menu-item tab" tab="transactions">
+            <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjExLjUsNDk0LjYyYy0xLjg2LTEuODYxLTQuNDQtMi45My03LjA3LTIuOTNjLTIuNjQsMC01LjIxLDEuMDY5LTcuMDcsMi45M2MtMS44NiwxLjg2MS0yLjkzLDQuNDQtMi45Myw3LjA3ICAgIHMxLjA3LDUuMjEsMi45Myw3LjA2OWMxLjg2LDEuODYsNC40NCwyLjkzMSw3LjA3LDIuOTMxczUuMjEtMS4wNyw3LjA3LTIuOTMxYzEuODYtMS44NTksMi45My00LjQzOSwyLjkzLTcuMDY5ICAgIFMyMTMuMzYsNDk2LjQ4LDIxMS41LDQ5NC42MnoiIGZpbGw9IiNEODAwMjciLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik01OCwzMTMuMTY1Yy01LjUyMywwLTEwLDQuNDc3LTEwLDEwdjkyLjgzM2MwLDUuNTIyLDQuNDc3LDEwLDEwLDEwczEwLTQuNDc4LDEwLTEwdi05Mi44MzMgICAgQzY4LDMxNy42NDMsNjMuNTIzLDMxMy4xNjUsNTgsMzEzLjE2NXoiIGZpbGw9IiNEODAwMjciLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik02NS4wNywyNzQuNDNjLTEuODYtMS44Ni00LjQ0LTIuOTMxLTcuMDctMi45MzFzLTUuMjEsMS4wNy03LjA3LDIuOTMxYy0xLjg2LDEuODU5LTIuOTMsNC40My0yLjkzLDcuMDY5ICAgIGMwLDIuNjMsMS4wNyw1LjIxLDIuOTMsNy4wN2MxLjg2LDEuODYsNC40NCwyLjkzLDcuMDcsMi45M3M1LjIxLTEuMDY5LDcuMDctMi45M2MxLjg2LTEuODYxLDIuOTMtNC40NCwyLjkzLTcuMDcgICAgUzY2LjkzLDI3Ni4yOSw2NS4wNywyNzQuNDN6IiBmaWxsPSIjRDgwMDI3Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTEyLDI3MC42OWMwLTIzLjk0My0xNy4yNjctNDMuOTE3LTQwLTQ4LjE1N1YxNTcuNjljMC0yNy41Ny0yMi40My01MC01MC01MGgtNTIuMjU2TDI2NS4yOSwzLjIzNiAgICBjLTMuOTA1LTMuOTA0LTEwLjIzNy0zLjkwNC0xNC4xNDMsMGwtMjMuMjQ1LDIzLjI0NUwyMDQuNjU3LDMuMjM2Yy0zLjkwNS0zLjkwNC0xMC4yMzctMy45MDQtMTQuMTQyLDBMODUuNDQsMTA4LjMxMiAgICBjLTEuMDc0LTAuMzk0LTIuMjI5LTAuNjItMy40NC0wLjYySDUwYy0yNy41NywwLTUwLDIyLjQzLTUwLDUwYzAsMC43MjksMC4wMjQsMS40NTMsMC4wNTUsMi4xNzQgICAgQzAuMDE5LDE2MC4yMDgsMCwxNjAuNTU3LDAsMTYwLjkxMXYzMDAuNzhjMCwyNy41NywyMi40Myw1MCw1MCw1MGgxMTIuMzMzYzUuNTIzLDAsMTAtNC40NzgsMTAtMTBjMC01LjUyMi00LjQ3Ny0xMC0xMC0xMEg1MCAgICBjLTE2LjU0MiwwLTMwLTEzLjQ1OC0zMC0zMFYxOTcuNjYzYzguMzYzLDYuMjkyLDE4Ljc1MywxMC4wMjcsMzAsMTAuMDI3bDIwOS4zMjYsMC4yMDNIMzcyLjkzYzAuMzI2LDAsMC42NTItMC4wMTcsMC45NzYtMC4wNDggICAgYzAuMDE5LTAuMDAyLDAuMDM4LTAuMDA1LDAuMDU3LTAuMDA3YzE1LjE1NiwxLjQ5MywyNy4wMzcsMTQuMzEsMjcuMDM3LDI5Ljg1M3Y2MkgyODBjLTI3LjU3LDAtNTAsMjIuNDMtNTAsNTBzMjIuNDMsNTAsNTAsNTAgICAgaDEyMXY2MmMwLDE2LjU0Mi0xMy40NTgsMzAtMzAsMzBIMjQ2LjMzM2MtNS41MjMsMC0xMCw0LjQ3OC0xMCwxMGMwLDUuNTIyLDQuNDc3LDEwLDEwLDEwSDM3MWMyNy41NywwLDUwLTIyLjQzLDUwLTUwdi00aDEgICAgYzI3LjU3LDAsNTAtMjIuNDMsNTAtNTB2LTkuMDA2YzIyLjc5NS00LjY0Niw0MC0yNC44NDcsNDAtNDguOTk0di03N2MwLTAuMjA5LTAuMDA2LTAuNDE3LTAuMDE5LTAuNjIzICAgIEM1MTEuOTk0LDI3MS42MSw1MTIsMjcxLjE1LDUxMiwyNzAuNjl6IE0yMzguODEsNDMuODYxbDE5LjQwOS0xOS40MWwyMS40MjksMjEuNDI5Yy0xMi43ODMsNy42OTktMjguODQyLDcuOS00MS44LDAuNjExICAgIEMyMzguMjk3LDQ1LjY1NSwyMzguNjE1LDQ0Ljc2OCwyMzguODEsNDMuODYxeiBNMjAsMTU3LjY5YzAtMTYuNTQyLDEzLjQ1OC0zMCwzMC0zMGgxNi4wNjFsLTQzLjA2Myw0My4wNjMgICAgQzIxLjA3OSwxNjYuODAyLDIwLDE2Mi4zNywyMCwxNTcuNjl6IE01MCwxODcuNjljLTQuNTcxLDAtOC45MDUtMS4wMzItMTIuNzg2LTIuODY4TDE5Ny41ODYsMjQuNDVsMTYuMTc0LDE2LjE3NEw2Ni42OTMsMTg3LjY5ICAgIEg1MHogTTE0NC4zNzksMTg3LjY5YzEuMzYtMS42NzUsMi44MDUtMy4yODcsNC4zNDQtNC44MjVjMTEuODA5LTExLjgxLDI3LjUxMS0xOC4zMTMsNDQuMjExLTE4LjMxMyAgICBjMTYuNywwLDMyLjQwMiw2LjUwNCw0NC4yMTEsMTguMzEzYzEuNTM5LDEuNTM4LDIuOTg0LDMuMTUxLDQuMzQ0LDQuODI1SDE0NC4zNzl6IE0zNTMuNzE0LDE4Ny42OWgtODguMjc1ICAgIGMtMy43NzYtNi45NjItOC41MS0xMy4zMjYtMTQuMTUyLTE4Ljk2OGMtMTUuNTg3LTE1LjU4Ny0zNi4zMTEtMjQuMTcxLTU4LjM1NC0yNC4xNzFjLTIyLjA0MywwLTQyLjc2Nyw4LjU4NC01OC4zNTQsMjQuMTcxICAgIGMtNS42NDMsNS42NDItMTAuMzc3LDEyLjAwNi0xNC4xNTIsMTguOTY4aC0yNS40NUwyMjIuMzY1LDYwLjMwNGMxMC42NzMsNy42NjIsMjMuMjYsMTEuNTA2LDM1Ljg1NCwxMS41MDYgICAgczI1LjE4MS0zLjg0MywzNS44NTQtMTEuNTA2bDY1LjI5OCw2NS4yOThDMzQ2LjI0NiwxNDMuODg1LDM0NC4zNTcsMTY3Ljc5MSwzNTMuNzE0LDE4Ny42OXogTTM3My43OTYsMTgyLjg4NSAgICBjLTcuOTEtMTMuMTMzLTcuOTEtMjkuNzI2LDAtNDIuODU4bDIxLjQyOSwyMS40MjlMMzczLjc5NiwxODIuODg1eiBNMzkyLjQzNywxOTIuNTI4bDI0LjAwMS0yNC4wMDEgICAgYzMuOTA1LTMuOTA1LDMuOTA1LTEwLjIzNywwLTE0LjE0M2wtMjYuNjk0LTI2LjY5NEg0MjJjMTYuNTQyLDAsMzAsMTMuNDU4LDMwLDMwdjE0MmgtMzF2LTYyICAgIEM0MjEsMjE3Ljc4OCw0MDkuMzEsMjAwLjU3LDM5Mi40MzcsMTkyLjUyOHogTTQ1Miw0MDcuNjljMCwxNi41NDItMTMuNDU4LDMwLTMwLDMwaC0xdi0zOGgzMVY0MDcuNjl6IE00OTIsMzQ5LjY5ICAgIGMwLDE2LjU0Mi0xMy40NTgsMzAtMzAsMzBIMjgwYy0xNi41NDIsMC0zMC0xMy40NTgtMzAtMzBzMTMuNDU4LTMwLDMwLTMwaDE4M2MxMC44NDMsMCwyMC44NzUtMy41NCwyOS05LjUyNVYzNDkuNjl6ICAgICBNNDcyLDI5OC4yNTN2LTU1LjEyNmMxMS41OTcsMy43OTYsMjAsMTQuNzE0LDIwLDI3LjU2M1M0ODMuNTk3LDI5NC40NTcsNDcyLDI5OC4yNTN6IiBmaWxsPSIjRDgwMDI3Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjg5LjA3LDM0Mi42MmMtMS44Ni0xLjg2LTQuNDQtMi45My03LjA3LTIuOTNzLTUuMjEsMS4wNjktNy4wNywyLjkzYy0xLjg2LDEuODYtMi45Myw0LjQ0LTIuOTMsNy4wNyAgICBzMS4wNyw1LjIxLDIuOTMsNy4wNjljMS44NiwxLjg2LDQuNDQsMi45MzEsNy4wNywyLjkzMXM1LjIxLTEuMDcsNy4wNy0yLjkzMWMxLjg2LTEuODU5LDIuOTMtNC40MzksMi45My03LjA2OSAgICBTMjkwLjkzLDM0NC40OCwyODkuMDcsMzQyLjYyeiIgZmlsbD0iI0Q4MDAyNyIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTI5My41NzYsMTI2LjA5OGMtMy45MDYtMy45MDMtMTAuMjM3LTMuOTA0LTE0LjE0MiwwbC0xNy4zOCwxNy4zOGMtMy45MDUsMy45MDUtMy45MDYsMTAuMjM3LDAsMTQuMTQzICAgIGMxLjk1MiwxLjk1Miw0LjUxMSwyLjkyOSw3LjA3MSwyLjkyOWMyLjU1OSwwLDUuMTE5LTAuOTc3LDcuMDcxLTIuOTI5bDE3LjM4LTE3LjM4ICAgIEMyOTcuNDgxLDEzNi4zMzYsMjk3LjQ4MiwxMzAuMDA1LDI5My41NzYsMTI2LjA5OHoiIGZpbGw9IiNEODAwMjciLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+            <br>
+            <span>Transactions</span>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 menu-item tab" tab="settings">
+            <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDU2IDU2IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1NiA1NjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIzMnB4IiBoZWlnaHQ9IjMycHgiPgo8Zz4KCTxwYXRoIGQ9Ik04LDQxLjA4VjJjMC0wLjU1My0wLjQ0OC0xLTEtMVM2LDEuNDQ3LDYsMnYzOS4wOEMyLjYxMyw0MS41NjgsMCw0NC40ODEsMCw0OGMwLDMuODU5LDMuMTQsNyw3LDdzNy0zLjE0MSw3LTcgICBDMTQsNDQuNDgxLDExLjM4Nyw0MS41NjgsOCw0MS4wOHogTTcsNTNjLTIuNzU3LDAtNS0yLjI0My01LTVzMi4yNDMtNSw1LTVzNSwyLjI0Myw1LDVTOS43NTcsNTMsNyw1M3oiIGZpbGw9IiNEODAwMjciLz4KCTxwYXRoIGQ9Ik0yOSwyMC42OTVWMmMwLTAuNTUzLTAuNDQ4LTEtMS0xcy0xLDAuNDQ3LTEsMXYxOC42MzJjLTMuNjAyLDAuMzk2LTYuNDE0LDMuNDU2LTYuNDE0LDcuMTYxczIuODEyLDYuNzY1LDYuNDE0LDcuMTYxVjU0ICAgYzAsMC41NTMsMC40NDgsMSwxLDFzMS0wLjQ0NywxLTFWMzQuODkxYzMuNC0wLjU3Nyw2LTMuNTM2LDYtNy4wOThTMzIuNCwyMS4yNzIsMjksMjAuNjk1eiBNMjcuNzkzLDMzICAgYy0yLjg3MSwwLTUuMjA3LTIuMzM2LTUuMjA3LTUuMjA3czIuMzM1LTUuMjA3LDUuMjA3LTUuMjA3UzMzLDI0LjkyMiwzMywyNy43OTNTMzAuNjY0LDMzLDI3Ljc5MywzM3oiIGZpbGw9IiNEODAwMjciLz4KCTxwYXRoIGQ9Ik01Niw4YzAtMy44NTktMy4xNC03LTctN3MtNywzLjE0MS03LDdjMCwzLjUxOSwyLjYxMyw2LjQzMiw2LDYuOTJWNTRjMCwwLjU1MywwLjQ0OCwxLDEsMXMxLTAuNDQ3LDEtMVYxNC45MiAgIEM1My4zODcsMTQuNDMyLDU2LDExLjUxOSw1Niw4eiBNNDksMTNjLTIuNzU3LDAtNS0yLjI0My01LTVzMi4yNDMtNSw1LTVzNSwyLjI0Myw1LDVTNTEuNzU3LDEzLDQ5LDEzeiIgZmlsbD0iI0Q4MDAyNyIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+            <br>
+            <span>Settings</span>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 menu-item">
+            <a href="/logout">
+                <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAzMzAgMzMwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMzAgMzMwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CjxnIGlkPSJYTUxJRF8yXyI+Cgk8cGF0aCBpZD0iWE1MSURfNF8iIGQ9Ik01MS4yMTMsMTgwaDE3My43ODVjOC4yODQsMCwxNS02LjcxNiwxNS0xNXMtNi43MTYtMTUtMTUtMTVINTEuMjEzbDE5LjM5NC0xOS4zOTMgICBjNS44NTgtNS44NTcsNS44NTgtMTUuMzU1LDAtMjEuMjEzYy01Ljg1Ni01Ljg1OC0xNS4zNTQtNS44NTgtMjEuMjEzLDBMNC4zOTcsMTU0LjM5MWMtMC4zNDgsMC4zNDctMC42NzYsMC43MS0wLjk4OCwxLjA5ICAgYy0wLjA3NiwwLjA5My0wLjE0MSwwLjE5My0wLjIxNSwwLjI4OGMtMC4yMjksMC4yOTEtMC40NTQsMC41ODMtMC42NiwwLjg5MWMtMC4wNiwwLjA5LTAuMTA5LDAuMTg1LTAuMTY4LDAuMjc2ICAgYy0wLjIwNiwwLjMyMi0wLjQwOCwwLjY0Ny0wLjU5LDAuOTg2Yy0wLjAzNSwwLjA2Ny0wLjA2NCwwLjEzOC0wLjA5OSwwLjIwNWMtMC4xODksMC4zNjctMC4zNzEsMC43MzktMC41MywxLjEyMyAgIGMtMC4wMiwwLjA0Ny0wLjAzNCwwLjA5Ny0wLjA1MywwLjE0NWMtMC4xNjMsMC40MDQtMC4zMTQsMC44MTMtMC40NDIsMS4yMzRjLTAuMDE3LDAuMDUzLTAuMDI2LDAuMTA4LTAuMDQxLDAuMTYyICAgYy0wLjEyMSwwLjQxMy0wLjIzMiwwLjgzLTAuMzE3LDEuMjU3Yy0wLjAyNSwwLjEyNy0wLjAzNiwwLjI1OC0wLjA1OSwwLjM4NmMtMC4wNjIsMC4zNTQtMC4xMjQsMC43MDgtMC4xNTksMS4wNjkgICBDMC4wMjUsMTYzLjk5OCwwLDE2NC40OTgsMCwxNjVzMC4wMjUsMS4wMDIsMC4wNzYsMS40OThjMC4wMzUsMC4zNjYsMC4wOTksMC43MjMsMC4xNiwxLjA4YzAuMDIyLDAuMTI0LDAuMDMzLDAuMjUxLDAuMDU4LDAuMzc0ICAgYzAuMDg2LDAuNDMxLDAuMTk2LDAuODUyLDAuMzE4LDEuMjY5YzAuMDE1LDAuMDQ5LDAuMDI0LDAuMTAxLDAuMDM5LDAuMTVjMC4xMjksMC40MjMsMC4yOCwwLjgzNiwwLjQ0NSwxLjI0NCAgIGMwLjAxOCwwLjA0NCwwLjAzMSwwLjA5MSwwLjA1LDAuMTM1YzAuMTYsMC4zODcsMC4zNDMsMC43NjEsMC41MzQsMS4xM2MwLjAzMywwLjA2NSwwLjA2MSwwLjEzMywwLjA5NSwwLjE5OCAgIGMwLjE4NCwwLjM0MSwwLjM4NywwLjY2OSwwLjU5NiwwLjk5NGMwLjA1NiwwLjA4OCwwLjEwNCwwLjE4MSwwLjE2MiwwLjI2N2MwLjIwNywwLjMwOSwwLjQzNCwwLjYwMywwLjY2MiwwLjg5NSAgIGMwLjA3MywwLjA5NCwwLjEzOCwwLjE5MywwLjIxMywwLjI4NWMwLjMxMywwLjM3OSwwLjY0MSwwLjc0MywwLjk4OCwxLjA5bDQ0Ljk5Nyw0NC45OTdDNTIuMzIyLDIyMy41MzYsNTYuMTYxLDIyNSw2MCwyMjUgICBzNy42NzgtMS40NjQsMTAuNjA2LTQuMzk0YzUuODU4LTUuODU4LDUuODU4LTE1LjM1NSwwLTIxLjIxM0w1MS4yMTMsMTgweiIgZmlsbD0iI0Q4MDAyNyIvPgoJPHBhdGggaWQ9IlhNTElEXzVfIiBkPSJNMjA3LjI5OSw0Mi4yOTljLTQwLjk0NCwwLTc5LjAzOCwyMC4zMTItMTAxLjkwMyw1NC4zMzNjLTQuNjIsNi44NzUtMi43OTIsMTYuMTk1LDQuMDgzLDIwLjgxNiAgIGM2Ljg3Niw0LjYyLDE2LjE5NSwyLjc5NCwyMC44MTctNC4wODNjMTcuMjgxLTI1LjcxNSw0Ni4wNjctNDEuMDY3LDc3LjAwMy00MS4wNjdDMjU4LjQxNCw3Mi4yOTksMzAwLDExMy44ODQsMzAwLDE2NSAgIHMtNDEuNTg2LDkyLjcwMS05Mi43MDEsOTIuNzAxYy0zMC44NDUsMC01OS41ODQtMTUuMjgzLTc2Ljg3OC00MC44ODFjLTQuNjM5LTYuODY1LTEzLjk2MS04LjY2OS0yMC44MjctNC4wMzIgICBjLTYuODY0LDQuNjM4LTguNjcsMTMuOTYyLTQuMDMyLDIwLjgyNmMyMi44ODEsMzMuODY4LDYwLjkxMyw1NC4wODcsMTAxLjczNyw1NC4wODdDMjc0Ljk1NiwyODcuNzAxLDMzMCwyMzIuNjU4LDMzMCwxNjUgICBTMjc0Ljk1Niw0Mi4yOTksMjA3LjI5OSw0Mi4yOTl6IiBmaWxsPSIjRDgwMDI3Ii8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
+            <br>
+            <span style="color: black;">Logout</span>
+            </a>
         </div>
     </div>
 </div>
+
+<div id="account" class="container tab-data"
+style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-radius: 10px;">
+    <h3>Account</h3> <br>
+    <div class="row">
+        <div class="col-md-5 offset-md-1 card" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+            <div class="row">
+                <div class="col-md-12">
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td><h5 style="font-weight: bold;">Savings Account</h5></td>
+                        </tr>
+                    </table>
+                    <hr style="border: none; height: 5px; background: #D80027;">
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td>A/C number </td>
+                            <td> : 1251571928750</td>
+                        </tr>
+                        <tr>
+                            <td>Balance</td>
+                            <td> : &#8377;
+                                <span id="acbalance"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Branch </td>
+                            <td> : Okhla</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 card" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+            <div class="row">
+                <div class="col-md-12" align="right">
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td><h5 style="font-weight: bold;">Quick Transfer</h5></td>
+                        </tr>
+                    </table>
+                    <hr style="border: none; height: 5px; background: #D80027;">
+                    <div class="form-group" align="left">
+                        <form action="" method="POST">
+                            <input class="form-control" type="text" id="destinationAC" 
+                            name="destinationAC" placeholder="Destination A/C"><br>
+
+                            <input class="form-control" type="text" id="amount" 
+                            name="amount" placeholder="Amount"> <br>
+    
+                            <input type="submit" class="btn btn-danger" style="width:100%;">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="transactions" class="container tab-data" 
+style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-radius: 10px;">
+    <h3>Transactions</h3> <br>
+    <div class="row">
+        <div class="col-md-3 offset-md-1">
+            <div class="row">
+                <div class="col-md-12 horz-tab active" tab="transfer" style="border-top-left-radius: 5px;">
+                    Transfer
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 horz-tab" tab="debit">
+                    Debit
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 horz-tab" tab="credit" style="border-bottom-left-radius: 5px;">
+                    Credit
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 card" 
+        style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 20px;">
+            <div class="row tab-data-Horz" id="transfer">
+                <div class="col-md-12">
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td><h5 style="font-weight: bold;">Transfer</h5></td>
+                        </tr>
+                    </table>
+                    <hr style="border: none; height: 5px; background: #D80027;">
+                    <div class="form-group">
+                        <form action="" method="POST">
+                            <input class="form-control" type="text" id="destinationAC" 
+                            name="destinationAC" placeholder="Destination A/C"><br>
+
+                            <input class="form-control" type="text" id="amount" 
+                            name="amount" placeholder="Amount"> <br>
+    
+                            <input type="submit" class="btn btn-danger" style="width:100%;">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row tab-data-Horz" id="debit">
+                <div class="col-md-12">
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td><h5 style="font-weight: bold;">Debit</h5></td>
+                        </tr>
+                    </table>
+                    <hr style="border: none; height: 5px; background: #D80027;">
+                    <div class="form-group">
+                        <form action="" method="POST">
+                            <input class="form-control" type="text" id="amount" 
+                            name="amount" placeholder="Amount"> <br>
+    
+                            <input type="submit" class="btn btn-danger" style="width:100%;">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row tab-data-Horz" id="credit">
+                <div class="col-md-12">
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td><h5 style="font-weight: bold;">Credit</h5></td>
+                        </tr>
+                    </table>
+                    <hr style="border: none; height: 5px; background: #D80027;">
+                    <div class="form-group">
+                        <form action="" method="POST">
+                            <input class="form-control" type="text" id="amount" 
+                            name="amount" placeholder="Amount"> <br>
+    
+                            <input type="submit" class="btn btn-danger" style="width:100%;">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="settings" class="container tab-data" 
+style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-radius: 10px;">
+    <h3>Settings</h3> <br>
+</div>
+
+<div style="position: fixed; background: white; width: 100%; bottom: 0; left: 0;">
+    Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from 
+    <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is 
+    licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 
+    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function insertCommas(s) {
+        let x = String(s);
+        x = x.split("").reverse().join("");
+        let newx = "";
+        let counter = 0;
+        for (let i = 0; i < x.length; i++) {
+            newx += x[i];
+            counter++;
+            if (counter >= 3) {
+                newx += ",";
+                counter = 0;
+            }
+        }
+        newx = newx.split("").reverse().join("");
+        if (newx[0] == ",")
+            newx = newx.substr(1, newx.length - 1);
+        return newx;
+    }
+    window.onload = () => {
+        $("#acbalance").text(insertCommas(1224534));
+    }
+</script>
 {% endblock %}
