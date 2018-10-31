@@ -5,3 +5,7 @@ class BaseConfig(object):
     SITE_KEY = "6LcSb3cUAAAAAF8NkmVESlCeODt-7F9qUmYaqKXy"
     CASSANDRA_HOSTS = ['127.0.0.1']  # list of cassandra cluster IP addresses.
     CASSANDRA_KEYSPACE = 'SBS'  # name of the keyspace (database)
+
+
+class DevelopmentConfig(BaseConfig):
+    DEBUG = True
