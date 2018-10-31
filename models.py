@@ -5,7 +5,7 @@ db = CQLAlchemy()  # create a CQLAlchemy wrapper [uses cassandra-driver]
 
 
 class PII(db.Model):
-    uid = db.columns.Text(required=True)
+    uid = db.columns.Text(primary_key=True, required=True)
     email = db.columns.Text(required=True)
     address = db.columns.Text(required=True)
     mobile = db.columns.Text(required=True)
