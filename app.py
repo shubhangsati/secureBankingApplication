@@ -70,9 +70,9 @@ def login():
                 session['logged_in'] = True
                 session['username'] = unameInput
                 flash("You were just logged in!")
-                if row[0].otp_secret == None or row[0].otp_enabled == False:
+                if row[0].otp_secret is None or row[0].otp_enabled is False:
                     return redirect(url_for('setup'))
-                else :
+                else:
                     return redirect(url_for('two_way_login'))
         else:
             flash("Invalid CAPTCHA!")
@@ -80,7 +80,6 @@ def login():
 
     return render_template('login.html', error=error,
                            sitekey=app.config['SITE_KEY'])
-
 
 
 @app.route('/two_way_login', methods=["GET", "POST"])
@@ -94,16 +93,14 @@ def two_way_login():
         totp = pyotp.TOTP(check_otp)
         if(totp.verify(token)):
             return redirect(url_for('index'))
-        else :
+        else:
             flash("Invalid Otp! Try again")
             return redirect(url_for('two_way_login'))
-
 
     return render_template('two_way_login.html')
 
 
-
-@app.route('/setup',methods=["GET", "POST"])
+@app.route('/setup', methods=["GET", "POST"])
 @login_required
 def setup():
     if request.method == 'POST':
@@ -117,7 +114,7 @@ def setup():
             row.otp_enabled = True
             row.save()
             # return redirect(url_for('login'))
-        else :
+        else:
             flash("Invalid Otp!! Verification Unsuccessful. Try again")
             return redirect(url_for('setup'))
     return render_template('otp_qrcode.html'), 200, {
@@ -141,6 +138,7 @@ def qrcode():
         'Pragma': 'no-cache',
         'Expires': '0'}
 
+
 def get_totp_uri(current_user):
     secret_base32 = pyotp.random_base32()
     totp = pyotp.TOTP(secret_base32)
@@ -149,8 +147,7 @@ def get_totp_uri(current_user):
     row.save()
 
     return 'otpauth://totp/SBS:{0}?secret={1}&issuer=SBS' \
-            .format(current_user, secret_base32)
-    
+        .format(current_user, secret_base32)
 
 
 def verify_captcha(captcha_response):
@@ -171,6 +168,7 @@ def logout():
     destroy_session()
     flash("You were just logged out!")
     return redirect(url_for('index'))
+
 
 def destroy_session():
     session.pop('logged_in', None)
