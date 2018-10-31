@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Two Factor Authentication Setup</h1>
+    <p>You are almost done! <br> Please start Google Authenticator on your smartphone and scan the following QR Code with it:</p>
+    <p><img id="qrcode" src="{{ url_for('qrcode') }}" style="background: white; padding: 10px;"></p>
+    <p>I'm done, take me to the <a href="{{ url_for('login') }}">Login</a> page!</p>
+
+{% endblock %}
