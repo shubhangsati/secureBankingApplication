@@ -73,7 +73,7 @@ def login():
                 session['logged_in'] = True
                 session['username'] = unameInput
                 flash("You were just logged in!")
-                if row[0].otp_secret == None :
+                if row[0].otp_secret == None or row[0].otp_enabled == False:
                     return redirect(url_for('setup'))
                 else :
                     return redirect(url_for('two_way_login'))
@@ -106,9 +106,23 @@ def two_way_login():
 
 
 
-@app.route('/setup')
+@app.route('/setup',methods=["GET", "POST"])
 @login_required
 def setup():
+    if request.method == 'POST':
+        token = request.form['token']
+        current_user = session['username']
+        row = models.User.objects(username=current_user)[0]
+        check_otp = row.otp_secret
+        totp = pyotp.TOTP(check_otp)
+        if(totp.verify(token)):
+            row.otp_enabled = True
+            row.save()
+            destroy_session()
+            return redirect(url_for('login'))
+        else :
+            flash("Invalid Otp!! Verification Unsuccessful. Try again")
+            return redirect(url_for('setup'))
     return render_template('otp_qrcode.html'), 200, {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
@@ -123,10 +137,10 @@ def qrcode():
     # if row.count() == 0:
     #     abort(404)
 
-    # for added security, remove username from session
-    # del session['username']
-    session.pop('logged_in', None)
-    session.pop('username', None)
+    # # for added security, remove username from session
+    # # del session['username']
+    # session.pop('logged_in', None)
+    # session.pop('username', None)
 
 
     # render qrcode for google authenticator
@@ -147,7 +161,7 @@ def get_totp_uri(current_user):
     row.otp_secret = secret_base32
     row.save()
 
-    return 'otpauth://totp/2FA-Demo:{0}?secret={1}&issuer=2FA-Demo' \
+    return 'otpauth://totp/SBS:{0}?secret={1}&issuer=SBS' \
             .format(current_user, secret_base32)
     
 
@@ -167,10 +181,13 @@ def verify_captcha(captcha_response):
 @login_required
 def logout():
     # pop information stored in the session
-    session.pop('logged_in', None)
-    session.pop('username', None)
+    destroy_session()
     flash("You were just logged out!")
     return redirect(url_for('index'))
+
+def destroy_session():
+    session.pop('logged_in', None)
+    session.pop('username', None)
 
 # test route to test the server
 

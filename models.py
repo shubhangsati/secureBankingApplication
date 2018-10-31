@@ -9,6 +9,7 @@ class User(db.Model):
     username = db.columns.Text(partition_key=True, required=True)
     password = db.columns.Text(required=True)
     otp_secret = db.columns.Text()
+    otp_enabled = db.columns.Boolean(default=False)
 
 
 class Account(db.Model):
