@@ -48,6 +48,8 @@ def login():
     # check if user is logged in
     # load index page if user is logged in
     # Todo: add more checks
+    if 'logged_in' in session and session['logged_in']:
+        return redirect(url_for("index"))
 
     # error string
     error = None
