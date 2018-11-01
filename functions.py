@@ -127,3 +127,12 @@ def fetchUserDetails(uname):
     details["utype"] = user.utype
     details["branch"] = account.bankBranch
     return details
+
+
+def fetchPendingTransactions():
+    rows = Transaction.objects(approvalRequired=True, completed=False).allow_filtering()
+    return rows
+
+
+def approveTransaction(index):
+    rows = fetchPendingTransactions()
