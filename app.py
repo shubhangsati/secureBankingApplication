@@ -162,7 +162,11 @@ def setup():
 @app.route('/qrcode')
 @login_required
 def qrcode():
+
     current_user = session['username']
+    row = models.User.objects(username=current_user)[0]
+    if(row.otp_enabled is True):
+        return redirect(url_for('login'))
 
     # render qrcode for google authenticator
     url = pyqrcode.create(get_totp_uri(current_user))
