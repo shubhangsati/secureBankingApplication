@@ -1,13 +1,13 @@
 from models import *
-from app import app
+#from app import app
 from sanitize import *
 import time
 
-db.init_app(app)  # initializes database
+# db.init_app(app)  # initializes database
 
-db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
+# db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
 
-db.sync_db()
+# db.sync_db()
 
 # accepts an object of type Transaction
 # type can be 1, 2 or 3
