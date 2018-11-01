@@ -78,18 +78,7 @@ def index():
     # row.tw_login = False
     # row.save()
 
-    # details = fetchUserDetails(current_user)
-    # return render_template("index.html", details=details)
-    details = {}
-    details["firstname"] = "firstname"
-    details["lastname"] = "lastname"
-    details["ac"] = "123456"
-    details["balance"] = "19248"
-    details["email"] = "admin@admin"
-    details["address"] = "admin's address"
-    details["phone"] = "1241252"
-    details["utype"] = "1"
-    details["branch"] = "admin's branch"
+    details = fetchUserDetails(current_user)
     return render_template("index.html", details=details)
 
 # login route
