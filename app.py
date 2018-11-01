@@ -32,6 +32,9 @@ def login_required(f):
             return redirect(url_for("login"))
     return wrap
 
+
+# to-do as soon as tab closes - session destroyed
+
 # default route
 
 
@@ -76,10 +79,15 @@ def login():
                     passInput).hexdigest() != row[0].password:
                 error = 'Invalid credentials. Please try again.'
 
+            elif row[0].session_estd is True:
+                flash("Session already open")
+
             # else log in successful
             else:
                 session['logged_in'] = True
                 session['username'] = unameInput
+                row[0].session_estd = True
+                row[0].save()
                 flash("You were just logged in!")
                 if row[0].otp_secret is None or row[0].otp_enabled is False:
                     return redirect(url_for('setup'))
@@ -187,6 +195,10 @@ def logout():
 
 
 def destroy_session():
+    current_user = session['username']
+    row = models.User.objects(username=current_user)[0]
+    row.session_estd = False
+    row.save()
     session.pop('logged_in', None)
     session.pop('username', None)
 
