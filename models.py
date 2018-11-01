@@ -56,9 +56,11 @@ class PIIAprroval(db.Model):
     mobile = db.columns.Text(required=True)
     approved = db.columns.Boolean(required=True)
 
+
 class Requests(db.Model):
-    requestId = db.columns.UUID(primary_key=True, default=uuid.uuid4) 
-    srcUid = db.columns.Text(required=True) # user who is initiating the request
+    requestId = db.columns.UUID(primary_key=True, default=uuid.uuid4)
+    # user who is initiating the request
+    srcUid = db.columns.Text(required=True)
     dstUid = db.columns.Text(required=True)
-    reqType = db.columns.Text(required=True) # can be 'View', etc 
+    reqType = db.columns.Text(required=True)  # can be 'View', etc
     approved = db.columns.Boolean(required=True, default=False)
