@@ -41,15 +41,16 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
             time=time.asctime(),
             approvalRequired=critical)
 
+        transactionF = None
         if not critical:
             if type == 1:
-                transfer(transaction)
+                transactionF = transfer(transaction)
             elif type == 2:
-                debit(transaction)
+                transactionF = debit(transaction)
             elif type == 3:
-                credit(transaction)
+                transactionF = credit(transaction)
 
-    return flag
+    return (flag, critical, transactionF)
 
 
 def tranfer(transaction):

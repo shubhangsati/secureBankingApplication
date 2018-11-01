@@ -49,7 +49,11 @@ def clean(x):
 
 def check_amount(x):
     flag = False
-    if x > 0 and x < 999999999 and isinstance(x, int):
+    for i in x:
+        if not i.isdigit():
+            return False
+    x = int(x)
+    if x > 0 and x < 999999999:
         flag = True
     return flag
 

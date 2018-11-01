@@ -11,6 +11,7 @@ import json
 import pyotp
 import pyqrcode
 import datetime
+from transactions import *
 
 # create a new Flask app
 app = Flask(__name__)
@@ -36,6 +37,30 @@ def login_required(f):
     return wrap
 
 
+def check_external(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session and 'username' in session:
+            if 'utype' in session and 'external' in session['utype']:
+                return f(*args, **kwargs)
+        else:
+            flash('You need to login as external user.')
+            return redirect(url_for("logout"))
+    return wrap
+
+
+def check_internal(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session and 'username' in session:
+            if 'utype' in session and 'internal' in session['utype']:
+                return f(*args, **kwargs)
+        else:
+            flash('You need to login as internal user.')
+            return redirect(url_for("logout"))
+    return wrap
+
+
 # to-do as soon as tab closes - session destroyed
 
 # default route
@@ -45,6 +70,7 @@ def login_required(f):
 @login_required
 def index():
     current_user = session['username']
+<<<<<<< Updated upstream
     row = models.User.objects(username=current_user)[0]
     if row.tw_login is False:
         flash('Two way authorization not completed. Login again.')
@@ -53,6 +79,29 @@ def index():
     # row.tw_login = False
     # row.save()
     return render_template("index.html")
+=======
+    # row = models.User.objects(username=current_user)[0]
+    # if row.tw_login is False:
+    #     flash('Two way authorization not completed. Login again.')
+    #     destroy_session()
+    #     return redirect(url_for('login'))
+    # row.tw_login = False
+    # row.save()
+
+    # details = fetchUserDetails(current_user)
+    # return render_template("index.html", details=details)
+    details = {}
+    details["firstname"] = "firstname"
+    details["lastname"] = "lastname"
+    details["ac"] = "123456"
+    details["balance"] = "19248"
+    details["email"] = "admin@admin"
+    details["address"] = "admin's address"
+    details["phone"] = "1241252"
+    details["utype"] = "1"
+    details["branch"] = "admin's branch"
+    return render_template("index.html", details=details)
+>>>>>>> Stashed changes
 
 # login route
 # uses both methods get and post
@@ -92,13 +141,15 @@ def login():
                 session['logged_in'] = True
                 session['username'] = unameInput
                 session['login'] = 1
+                session['utype'] = row[0].utype
                 row[0].session_estd = True
                 row[0].save()
                 flash("You were just logged in!")
-                if row[0].otp_secret is None or row[0].otp_enabled is False:
-                    return redirect(url_for('setup'))
-                else:
-                    return redirect(url_for('two_way_login'))
+                return redirect(url_for("index"))
+                # if row[0].otp_secret is None or row[0].otp_enabled is False:
+                #     return redirect(url_for('setup'))
+                # else:
+                #     return redirect(url_for('two_way_login'))
         else:
             flash("Invalid CAPTCHA!")
             return redirect(url_for('login'))
@@ -245,6 +296,122 @@ def test():
 @app.route('/internal')
 def internal():
     return render_template('internal.html')
+
+
+@app.route('/quicktransfer', methods=['POST'])
+@login_required
+@check_external
+def quicktransfer():
+    if 'destinationAC' in request.form:
+        destinationAC = request.form['destinationAC']
+    else:
+        flash('destination account not set')
+        return redirect(url_for('index'))
+    
+    if 'amount' in request.form:
+        amount = request.form['amount']
+    else:
+        flash('amount not set')
+        return redirect(url_for('index'))
+    
+    user = User.objects(username=session['username'])[0]
+    sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
+    result = createTransactionRecord(1, amount, destination, sourceAC)
+    if not result[0]:
+        flash('Invalid input')
+        return redirect(url_for('index'))
+    if result[1]:
+        flash('Critical Transaction! Sent for review')
+        return redirect(url_for('index'))
+    if result[2]:
+        flash('Transaction Completed')
+        return redirect(url_for('index'))
+    if not result[2]:
+        flash('Transaction failed')
+        return redirect(url_for('index'))
+
+    return redirect(url_for('index'))
+
+
+@app.route('/debit', methods=['POST'])
+@login_required
+@check_external
+def debit():
+    if 'amount' in request.form:
+        amount = request.form['amount']
+    else:
+        flash('amount not set')
+        return redirect(url_for('index'))
+    
+    user = User.objects(username=session['username'])[0]
+    sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
+    result = createTransactionRecord(2, amount, sourceAC)
+    if not result[0]:
+        flash('Invalid input')
+        return redirect(url_for('index'))
+    if result[1]:
+        flash('Critical Transaction! Sent for review')
+        return redirect(url_for('index'))
+    if result[2]:
+        flash('Transaction Completed')
+        return redirect(url_for('index'))
+    if not result[2]:
+        flash('Transaction failed')
+        return redirect(url_for('index'))
+
+    return redirect(url_for('index'))
+
+
+@app.route('/credit', methods=['POST'])
+@login_required
+@check_external
+def credit():
+    if 'amount' in request.form:
+        amount = request.form['amount']
+    else:
+        flash('amount not set')
+        return redirect(url_for('index'))
+    
+    user = User.objects(username=session['username'])[0]
+    sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
+    result = createTransactionRecord(3, amount, sourceAC)
+    if not result[0]:
+        flash('Invalid input')
+        return redirect(url_for('index'))
+    if result[1]:
+        flash('Critical Transaction! Sent for review')
+        return redirect(url_for('index'))
+    if result[2]:
+        flash('Transaction Completed')
+        return redirect(url_for('index'))
+    if not result[2]:
+        flash('Transaction failed')
+        return redirect(url_for('index'))
+
+    return redirect(url_for('index'))
+
+
+@app.route('/PIImod', methods=['POST'])
+@login_required
+@check_external
+def PIImod():
+    required = {'firstname': None, 'lastname': None, 'email': None, 'address': None, 'phone': None}
+    for i in required:
+        if i not in request.form:
+            flash_message = '[-] ' + i + ' not set'
+            flash(flash_message)
+            return redirect(url_for('index'))
+        else:
+            required[i] = request.form[i]
+    
+    result = updatePII(session['username'], required['firstname'], 
+    required['lastname'], required['address'], required['phone'])
+    
+    if result:
+        flash("PII update -- request created")
+    else:
+        flash("Invalid input")
+    return redirect(url_for('index'))
 
 
 if __name__ == "__main__":
