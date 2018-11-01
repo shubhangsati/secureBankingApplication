@@ -48,7 +48,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     <table cellpadding="10px" cellspacing="5px">
                         <tr>
                             <td>A/C number </td>
-                            <td> : 1251571928750</td>
+                            <td> : {{ details["ac"] }}</td>
                         </tr>
                         <tr>
                             <td>Balance</td>
@@ -58,7 +58,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                         </tr>
                         <tr>
                             <td>Branch </td>
-                            <td> : Okhla</td>
+                            <td> : {{ details["branch"] }}</td>
                         </tr>
                     </table>
                 </div>
@@ -74,7 +74,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     </table>
                     <hr style="border: none; height: 5px; background: #D80027;">
                     <div class="form-group" align="left">
-                        <form action="" method="POST">
+                        <form action="/quicktransfer" method="POST">
                             <input class="form-control" type="text" id="destinationAC" 
                             name="destinationAC" placeholder="Destination A/C"><br>
 
@@ -122,7 +122,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     </table>
                     <hr style="border: none; height: 5px; background: #D80027;">
                     <div class="form-group">
-                        <form action="" method="POST">
+                        <form action="/quicktransfer" method="POST">
                             <input class="form-control" type="text" id="destinationAC" 
                             name="destinationAC" placeholder="Destination A/C"><br>
 
@@ -184,21 +184,23 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
             <div class="col-md-5 offset-md-1 card" 
             style="border-top-right-radius:0; border-bottom-right-radius: 0;">
                 <label for="firstname">First Name</label>
-                <input class="form-control" type="text" required name="firstname" value=""> <br>
+                <input class="form-control" type="text" required name="firstname" value="{{ details['firstname'] }}"> <br>
 
                 <label for="lastname">Last Name</label>
-                <input class="form-control" type="text" required name="lastname" value=""> <br>
+                <input class="form-control" type="text" required name="lastname" value="{{ details['lastname'] }}"> <br>
 
                 <label for="email">E-mail</label>
-                <input class="form-control" type="email" required > <br>
+                <input class="form-control" type="email" name="email" required value="{{ details['email'] }}" > <br>
             </div>
             <div class="col-md-5 card" 
             style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 10px;">
                 <label for="address">Address</label>
-                <textarea class="form-control" name="address" id="address" required rows="5"></textarea> <br>
+                <textarea class="form-control" name="address" id="address" required rows="5">
+                    {{ details["address"] }}
+                </textarea> <br>
 
                 <label for="phone">Phone</label>
-                <input class="form-control" type="text" required name="phone" value=""> <br>
+                <input class="form-control" type="text" required name="phone" value="{{ details['phone'] }}"> <br>
             </div>
         </div>
         <div class="row">
@@ -240,7 +242,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
         return newx;
     }
     window.onload = () => {
-        $("#acbalance").text(insertCommas(1224534));
+        $("#acbalance").text(insertCommas({{ details["balance"] }}));
     }
 </script>
 {% endblock %}

@@ -1,12 +1,12 @@
 from models import *
-from app import app
+# from app import app
 from sanitize import *
 
-db.init_app(app)  # initializes database
+# db.init_app(app)  # initializes database
 
-db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
+# db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
 
-db.sync_db()
+# db.sync_db()
 
 # this function takes in uid and deletes the fields associated with him
 # this would delete all pending requests, transactions, accounts
@@ -58,3 +58,20 @@ def ViewTransactions(AC):
     for x in t2:
         views.append(x)
     return views
+
+
+def fetchUserDetails(uname):
+    user = User.objects(username=uname)[0]
+    pii = PII.objects(uid=user.uid).allow_filtering()[0]
+    account = Account.objects(uid=user.uid).allow_filtering()[0]
+    details = {}
+    details["firstname"] = pii.first_name
+    details["lastname"] = pii.last_name
+    details["ac"] = account.accountNumber
+    details["balance"] = account.balance
+    details["email"] = pii.email
+    details["address"] = pii.address
+    details["phone"] = pii.mobile
+    details["utype"] = user.utype
+    details["branch"] = account.bankBranch
+    return details
