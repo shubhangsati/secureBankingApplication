@@ -86,6 +86,7 @@ def login():
             else:
                 session['logged_in'] = True
                 session['username'] = unameInput
+                session['login'] = 1
                 row[0].session_estd = True
                 row[0].save()
                 flash("You were just logged in!")
@@ -104,6 +105,12 @@ def login():
 @app.route('/two_way_login', methods=["GET", "POST"])
 @login_required
 def two_way_login():
+
+    if session['login'] == 1:
+        session['login'] = 0
+    else:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         token = request.form['token']
         current_user = session['username']
@@ -125,6 +132,12 @@ def two_way_login():
 @app.route('/setup', methods=["GET", "POST"])
 @login_required
 def setup():
+
+    if session['login'] == 1:
+        session['login'] = 0
+    else:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         token = request.form['token']
         current_user = session['username']
@@ -201,6 +214,7 @@ def destroy_session():
     row.save()
     session.pop('logged_in', None)
     session.pop('username', None)
+    session.pop('login', None)
 
 # test route to test the server
 
