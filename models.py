@@ -57,6 +57,8 @@ class PIIAprroval(db.Model):
     approved = db.columns.Boolean(required=True)
 
 class Requests(db.Model):
-    srcUid = db.columns.Text(required=True)
+    requestId = db.columns.UUID(primary_key=True, default=uuid.uuid4) 
+    srcUid = db.columns.Text(required=True) # user who is initiating the request
     dstUid = db.columns.Text(required=True)
-    reqType = db.columns.Text(required=True)
+    reqType = db.columns.Text(required=True) # can be 'View', etc 
+    approved = db.columns.Boolean(required=True, default=False)
