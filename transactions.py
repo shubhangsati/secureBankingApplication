@@ -28,6 +28,7 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
     else:
         f2 = True
     if check_amount(amt) and f1 and f2:
+        amt = int(amt)
         flag = True
         critical = False
         if amt >= 100000:
@@ -39,7 +40,8 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
             destinationAC=destination,
             amount=amt,
             time=time.asctime(),
-            approvalRequired=critical)
+            approvalRequired=critical,
+            completed=False)
 
         transactionF = None
         if not critical:
@@ -53,7 +55,7 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
     return (flag, critical, transactionF)
 
 
-def tranfer(transaction):
+def transfer(transaction):
     src = Account.objects(
         accountNumber=transaction.sourceAC).allow_filtering()[0]
     dst = Account.objects(
@@ -64,11 +66,11 @@ def tranfer(transaction):
     if not completed:
         s = src.balance
         d = dst.balance
-        if amount <= s:
-            d += amount
-            s -= amount
-            src.update(amount=s)
-            dst.update(amount=d)
+        if amt <= s:
+            d += amt
+            s -= amt
+            src.update(balance=s)
+            dst.update(balance=d)
             transaction.completed = True
 
     return transaction.completed
@@ -82,15 +84,15 @@ def debit(transaction):
 
     if not completed:
         d = dst.balance
-        if amount <= d:
-            d -= amount
-            dst.update(amount=d)
+        if amt <= d:
+            d -= amt
+            dst.update(balance=d)
             transaction.completed = True
 
     return transaction.completed
 
 
-def credit():
+def credit(transaction):
     dst = Account.objects(
         accountNumber=transaction.destinationAC).allow_filtering()[0]
     amt = transaction.amount
@@ -98,8 +100,8 @@ def credit():
 
     if not completed:
         d = dst.balance
-        d += amount
-        dst.update(amount=d)
+        d += amt
+        dst.update(balance=d)
         transaction.completed = True
 
     return transaction.completed

@@ -47,7 +47,7 @@ class Transaction(db.Model):
     completed = db.columns.Boolean(required=True)
 
 
-class PIIAprroval(db.Model):
+class PIIApproval(db.Model):
     uid = db.columns.UUID(primary_key=True, required=True)
     first_name = db.columns.Text(required=True)
     last_name = db.columns.Text(required=True)

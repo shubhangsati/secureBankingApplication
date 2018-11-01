@@ -18,14 +18,14 @@ def updatePII(uname, fname, lname, mail, add, phone):
     flag = False
     row = User.objects(username=uname).allow_filtering()
     if row.count() == 1:
-        id = row[0].id
+        id = row[0].uid
         PIIApproval.create(
             uid=id,
             first_name=fname,
             last_name=lname,
             email=mail,
             address=add,
-            phone=mobile,
+            mobile=phone,
             approved=False)
         flag = True
 

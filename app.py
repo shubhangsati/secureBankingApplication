@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, session, f
 from functools import wraps
 from flask_socketio import SocketIO, emit
 from models import db, User
+from functions import fetchUserDetails, updatePII
 from io import BytesIO
 import hashlib
 import models
@@ -87,7 +88,7 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    session.permanent = True
+    # session.permanent = True
     # check if user is logged in
     # load index page if user is logged in
     # Todo: add more checks
@@ -123,11 +124,11 @@ def login():
                 row[0].session_estd = True
                 row[0].save()
                 flash("You were just logged in!")
-                return redirect(url_for("index"))
-                # if row[0].otp_secret is None or row[0].otp_enabled is False:
-                #     return redirect(url_for('setup'))
-                # else:
-                #     return redirect(url_for('two_way_login'))
+                # return redirect(url_for("index"))
+                if row[0].otp_secret is None or row[0].otp_enabled is False:
+                    return redirect(url_for('setup'))
+                else:
+                    return redirect(url_for('two_way_login'))
         else:
             flash("Invalid CAPTCHA!")
             return redirect(url_for('login'))
@@ -294,7 +295,8 @@ def quicktransfer():
 
     user = User.objects(username=session['username'])[0]
     sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
-    result = createTransactionRecord(1, amount, destination, sourceAC)
+    result = createTransactionRecord(1, amount, destinationAC,
+                                     sourceAC.accountNumber)
     if not result[0]:
         flash('Invalid input')
         return redirect(url_for('index'))
@@ -314,7 +316,7 @@ def quicktransfer():
 @app.route('/debit', methods=['POST'])
 @login_required
 @check_external
-def debit():
+def debitMoney():
     if 'amount' in request.form:
         amount = request.form['amount']
     else:
@@ -323,7 +325,7 @@ def debit():
 
     user = User.objects(username=session['username'])[0]
     sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
-    result = createTransactionRecord(2, amount, sourceAC)
+    result = createTransactionRecord(2, amount, sourceAC.accountNumber)
     if not result[0]:
         flash('Invalid input')
         return redirect(url_for('index'))
@@ -343,7 +345,7 @@ def debit():
 @app.route('/credit', methods=['POST'])
 @login_required
 @check_external
-def credit():
+def creditMoney():
     if 'amount' in request.form:
         amount = request.form['amount']
     else:
@@ -352,7 +354,7 @@ def credit():
 
     user = User.objects(username=session['username'])[0]
     sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
-    result = createTransactionRecord(3, amount, sourceAC)
+    result = createTransactionRecord(3, amount, sourceAC.accountNumber)
     if not result[0]:
         flash('Invalid input')
         return redirect(url_for('index'))
@@ -388,7 +390,8 @@ def PIImod():
             required[i] = request.form[i]
 
     result = updatePII(session['username'], required['firstname'],
-                       required['lastname'], required['address'], required['phone'])
+                       required['lastname'], required['email'],
+                       required['address'], required['phone'])
 
     if result:
         flash("PII update -- request created")
