@@ -87,12 +87,12 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                                 {% endif %}
                             </tr>
                         {% endfor %}
-                        </form>
                     </table>
                     </font>
                     </div>
                     <hr style="border: none; height: 5px; background: #D80027;">
                     <input type="submit" class="btn btn-danger" style="width:100%;">
+                </form>
                 </div>
             </div>
         </div>
@@ -132,11 +132,10 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                                 <td style="font-weight: bold;">Destination A/C</td>
                                 <td style="font-weight: bold;">Amount</td>
                                 <td style="font-weight: bold;">Transaction Time</td>
-                                <td style="font-weight: bold;">Approval</td>
                                 <td style="font-weight: bold;">Completed</td>
                             </tr>
                             <form action="/approveTransaction" method="POST">
-                            {% for t in pt %}
+                            {% for t in vt %}
                                 <tr>
                                     {% if t.transactionType == 2 %}
                                         <td>Debit</td>
@@ -152,9 +151,6 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
     
                                     <td>&#8377; {{ t.amount }}</td>
                                     <td>{{ t.time }}</td>
-                                    <td>
-                                        <input type="radio" name="approveTransactionIndex" value="{{ loop.index }}">
-                                    </td>
                                     {% if t.completed %}
                                         <td style="color: green">
                                             YES
@@ -190,11 +186,11 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     </table>
                     <hr style="border: none; height: 5px; background: #D80027;">
                     <div class="form-group">
-                        <form action="" method="POST">
-                            <input class="form-control" type="text" id="destinationAC" 
-                            name="destinationAC" placeholder="Account Number"><br>
+                        <form action="/deleteUser" method="POST">
+                                <input class="form-control" type="text" 
+                                name="acnumber" placeholder="Account Number"><br>
     
-                            <input type="submit" class="btn btn-danger" style="width:100%;">
+                            <input type="submit" value="Delete" class="btn btn-danger" style="width:100%;">
                         </form>
                     </div>
                 </div>
@@ -221,7 +217,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                             <td style="font-weight: bold;">Phone</td>
                             <td style="font-weight: bold;">Approve</td>
                         </tr>
-                        <form action="/approvePII" method="POST"></form>
+                        <form action="/approvePII" method="POST">
                         {% for p in piilist %}
                             <tr>
                                 <td>{{ p.first_name }}</td>
@@ -237,6 +233,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     </div>
                     <hr style="border: none; height: 5px; background: #D80027;">
                     <input type="submit" class="btn btn-danger" style="width:100%;">
+                </form>
                 </div>
             </div>
         </div>

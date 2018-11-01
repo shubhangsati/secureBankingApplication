@@ -60,7 +60,7 @@ class PIIApproval(db.Model):
 class Requests(db.Model):
     requestId = db.columns.UUID(primary_key=True, default=uuid.uuid4)
     # user who is initiating the request
-    srcUid = db.columns.Text(required=True)
-    dstUid = db.columns.Text(required=True)
+    srcUid = db.columns.UUID(required=True)
+    dstUid = db.columns.UUID(required=True)
     reqType = db.columns.Text(required=True)  # can be 'View', etc
     approved = db.columns.Boolean(required=True, default=False)

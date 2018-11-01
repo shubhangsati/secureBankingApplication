@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, url_for, redirect, session, flash
 from functools import wraps
 from flask_socketio import SocketIO, emit
-from models import db, User
+from models import *
 from functions import *
 from io import BytesIO
 import hashlib
@@ -100,7 +100,9 @@ def internal():
         flash('Two way authorization not completed. Login again.')
         destroy_session()
         return redirect(url_for('login'))
-    return render_template('internal.html')
+    pt = fetchPendingTransactions()
+    piilist = viewPIIReq()
+    return render_template('internal.html', pt=pt, piilist=piilist)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -459,7 +461,7 @@ def approvePII1():
     return redirect(url_for('internal'))
 
 
-@app.route('/viewTransaction', methods=['POST'])
+@app.route('/viewTransactions', methods=['POST'])
 @login_required
 @check_internal
 def viewTransaction():
@@ -467,11 +469,37 @@ def viewTransaction():
         acnumber = request.form['acnumber']
         viewtransactions = ViewTransactions(acnumber)
         # get transactions
-        return render_template('internal', vt=viewtransactions)
+        pt = fetchPendingTransactions()
+        piilist = viewPIIReq()
+        return render_template('internal.html', pt=pt, piilist=piilist, vt=viewtransactions)
     else:
         flash('Invalid')
         return redirect(url_for('internal'))
     return redirect(url_for('internal'))
+
+
+@app.route('/deleteUser', methods=['POST'])
+@login_required
+@check_internal
+def delUser():
+    if 'acnumber' in request.form:
+        acnumber = request.form['acnumber']
+        account = Account.objects(accountNumber=acnumber)
+        userID = None
+        if account.count() > 0:
+            userID = account[0].uid
+        else:
+            flash('Invalid Input')
+            return redirect(url_for('internal'))
+        deleteUser(userID)
+        flashmessage = 'User with account number: ' + acnumber + ' has been deleted'
+        flash(flashmessage)
+        return redirect(url_for('internal'))
+    else:
+        flash('Invalid')
+        return redirect(url_for('internal'))
+    return redirect(url_for('internal'))
+
 
 def is_int(n):
     try:
