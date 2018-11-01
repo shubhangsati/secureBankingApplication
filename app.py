@@ -13,7 +13,7 @@ import pyqrcode
 # create a new Flask app
 app = Flask(__name__)
 # load configurations from config.py
-app.config.from_object("config.DevelopmentConfig")
+app.config.from_object("config.BaseConfig")
 # initialize database
 db.init_app(app)
 # app.secret_key = "random"
