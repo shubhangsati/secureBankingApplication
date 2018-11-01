@@ -1,6 +1,7 @@
 # imports
 from flask import Flask, render_template, request, url_for, redirect, session, flash
 from functools import wraps
+from flask_socketio import SocketIO, emit
 from models import db, User
 from io import BytesIO
 import hashlib
@@ -20,6 +21,8 @@ db.init_app(app)
 # app.secret_key = "random"
 # this function will be called whenever it is
 # required to be logged in to be able to view a page
+
+socketio = SocketIO(app)
 
 
 def login_required(f):
@@ -57,6 +60,7 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    session.permanent = True
     # check if user is logged in
     # load index page if user is logged in
     # Todo: add more checks
@@ -219,6 +223,12 @@ def destroy_session():
     session.pop('logged_in', None)
     session.pop('username', None)
     session.pop('login', None)
+
+
+"""@socketio.on('disconnect')
+def disconnect_user():
+    destroy_session()
+    session.pop('yourkey', None)"""
 
 # test route to test the server
 
