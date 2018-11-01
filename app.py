@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, session, f
 from functools import wraps
 from flask_socketio import SocketIO, emit
 from models import db, User
-from functions import fetchUserDetails, updatePII
+from functions import *
 from io import BytesIO
 import hashlib
 import models
@@ -274,6 +274,7 @@ def test():
 
 @app.route('/internal')
 def internal():
+    pendingTransactions = fetch
     return render_template('internal.html')
 
 
