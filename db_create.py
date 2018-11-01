@@ -24,4 +24,15 @@ if User.objects(username="user").count() == 0:
             sha256("user").hexdigest()))
 # if user already exists print user exists
 else:
+    # u1 = User.objects(username='1')
+    u1 = User.objects(username="admin").allow_filtering()
+    u2 = User.objects(username="2").allow_filtering()
+    temp = []
+    for x in u1:
+        temp.append(x)
+    for x in u2:
+        temp.append(x)
+    print len(temp)
+    # for x in [u1, u2]:
+    #    print x[:]
     print "User already exists"

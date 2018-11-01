@@ -26,7 +26,7 @@ class User(db.Model):
 
     # utype can be internal-A, internal-B, internal-C, external-A, or
     # external-B
-    utype = db.columns.Text(required=True, default='internal-A')
+    utype = db.columns.Text(required=True, default='external-A')
 
 
 class Account(db.Model):
@@ -55,3 +55,12 @@ class PIIAprroval(db.Model):
     address = db.columns.Text(required=True)
     mobile = db.columns.Text(required=True)
     approved = db.columns.Boolean(required=True)
+
+
+class Requests(db.Model):
+    requestId = db.columns.UUID(primary_key=True, default=uuid.uuid4)
+    # user who is initiating the request
+    srcUid = db.columns.Text(required=True)
+    dstUid = db.columns.Text(required=True)
+    reqType = db.columns.Text(required=True)  # can be 'View', etc
+    approved = db.columns.Boolean(required=True, default=False)
