@@ -19,7 +19,7 @@ class User(db.Model):
     password = db.columns.Text(required=True)
     otp_secret = db.columns.Text()
     otp_enabled = db.columns.Boolean(default=False)
-    #boolean for two_way_login confirmation
+    # boolean for two_way_login confirmation
     tw_login = db.columns.Boolean(default=False)
     # utype can be internal-A, internal-B, internal-C, external-A, or
     # external-B

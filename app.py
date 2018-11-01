@@ -155,7 +155,7 @@ def qrcode():
 def get_totp_uri(current_user):
     secret_base32 = pyotp.random_base32()
     totp = pyotp.TOTP(secret_base32)
-    #secret_base for Otp written in the database
+    # secret_base for Otp written in the database
     row = models.User.objects(username=current_user)[0]
     row.otp_secret = secret_base32
     row.save()
