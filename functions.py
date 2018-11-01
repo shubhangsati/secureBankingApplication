@@ -2,6 +2,7 @@ from models import *
 # from app import app
 from sanitize import *
 from hashlib import sha256
+from transactions import *
 
 # db.init_app(app)  # initializes database
 #
@@ -34,7 +35,7 @@ def updatePII(uname, fname, lname, mail, add, phone):
 
 def createUser(x):  # expects x as dict
     flag = False
-    print type(Account.objects(accountNumber=x["AC"]).count())
+    # print type(Account.objects(accountNumber=x["AC"]).count())
     if Account.objects(accountNumber=x["AC"]).count() == 0:
         print 'temp'
         User.create(
@@ -111,6 +112,28 @@ def ViewTransactions(AC):
         views.append(x)
     return views
 
+def approveTransaction(trancId):
+    row = Transaction.objects(transactionId=trancId).allow_filtering()[0]
+
+
+def viewPIIReq():
+    pii = PIIApproval.objects().allow_filtering()
+    views=[]
+    for x in pii:
+        view.append(x)
+    return views
+
+# approvePII takes in index
+def approvePII(i):
+    temp = viewPIIReq()
+    pii = temp[i]
+    ID = pii.uid
+    PII.delete(pii)
+    PII.create
+    uname = User.objects(uid=ID)[0].username
+    pii.updatePII(uname, pii.first_name, pii.last_name, )
+
+    return 
 
 def fetchUserDetails(uname):
     user = User.objects(username=uname)[0]
