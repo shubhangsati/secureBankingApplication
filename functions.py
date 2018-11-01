@@ -1,6 +1,7 @@
 from models import *
 #from app import app
 from sanitize import *
+from hashlib import sha256
 
 # db.init_app(app)  # initializes database
 # 
@@ -27,7 +28,7 @@ def createUser(x): # expects x as dict
     print type(Account.objects(accountNumber=x["AC"]).count())
     if Account.objects(accountNumber=x["AC"]).count() == 0:
         print 'temp'
-        User.create(username=x["username"], password=x["password"], utype=x ["utype"])
+        User.create(username=x["username"], password=sha256(x["password"]).hexdigest(), utype=x ["utype"])
         id = User.objects(username=x["username"]).allow_filtering()[0].uid
         
         if 'external' in x["utype"]:
