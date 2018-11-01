@@ -285,13 +285,13 @@ def quicktransfer():
     else:
         flash('destination account not set')
         return redirect(url_for('index'))
-    
+
     if 'amount' in request.form:
         amount = request.form['amount']
     else:
         flash('amount not set')
         return redirect(url_for('index'))
-    
+
     user = User.objects(username=session['username'])[0]
     sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
     result = createTransactionRecord(1, amount, destination, sourceAC)
@@ -320,7 +320,7 @@ def debit():
     else:
         flash('amount not set')
         return redirect(url_for('index'))
-    
+
     user = User.objects(username=session['username'])[0]
     sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
     result = createTransactionRecord(2, amount, sourceAC)
@@ -349,7 +349,7 @@ def credit():
     else:
         flash('amount not set')
         return redirect(url_for('index'))
-    
+
     user = User.objects(username=session['username'])[0]
     sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
     result = createTransactionRecord(3, amount, sourceAC)
@@ -373,7 +373,12 @@ def credit():
 @login_required
 @check_external
 def PIImod():
-    required = {'firstname': None, 'lastname': None, 'email': None, 'address': None, 'phone': None}
+    required = {
+        'firstname': None,
+        'lastname': None,
+        'email': None,
+        'address': None,
+        'phone': None}
     for i in required:
         if i not in request.form:
             flash_message = '[-] ' + i + ' not set'
@@ -381,10 +386,10 @@ def PIImod():
             return redirect(url_for('index'))
         else:
             required[i] = request.form[i]
-    
-    result = updatePII(session['username'], required['firstname'], 
-    required['lastname'], required['address'], required['phone'])
-    
+
+    result = updatePII(session['username'], required['firstname'],
+                       required['lastname'], required['address'], required['phone'])
+
     if result:
         flash("PII update -- request created")
     else:

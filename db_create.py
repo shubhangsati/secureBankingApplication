@@ -14,71 +14,71 @@ db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
 db.sync_db()
 
 x0 = {
-        "username":"user",
-        "password":"user",
-        "utype":"external-A",
-        "firstname":"User",
-        "lastname":"Sharma",
-        "email":"user@mail.com",
-        "AC":"11111",
-        "balance":1000,
-        "branch":"Okhla",
-        "address":"Delhi",
-        "phone":"9911223344"
-        }
+    "username": "user",
+    "password": "user",
+    "utype": "external-A",
+    "firstname": "User",
+    "lastname": "Sharma",
+    "email": "user@mail.com",
+    "AC": "11111",
+    "balance": 1000,
+    "branch": "Okhla",
+    "address": "Delhi",
+    "phone": "9911223344"
+}
 x1 = {
-        "username":"admin",
-        "password":"admin",
-        "utype":"internal-C",
-        "firstname":"Admin",
-        "lastname":"Sati",
-        "email":"admin@mail.com",
-        "AC":"22222",
-        "balance":1000,
-        "branch":"Okhla",
-        "address":"Delhi",
-        "phone":"9911223344"
-        }
+    "username": "admin",
+    "password": "admin",
+    "utype": "internal-C",
+    "firstname": "Admin",
+    "lastname": "Sati",
+    "email": "admin@mail.com",
+    "AC": "22222",
+    "balance": 1000,
+    "branch": "Okhla",
+    "address": "Delhi",
+    "phone": "9911223344"
+}
 x2 = {
-        "username":"admin1",
-        "password":"admin1",
-        "utype":"internal-B",
-        "firstname":"Admin1",
-        "lastname":"Sati",
-        "email":"admin1@mail.com",
-        "AC":"22222",
-        "balance":1000,
-        "branch":"Okhla",
-        "address":"Delhi",
-        "phone":"9911223344"
-        }
+    "username": "admin1",
+    "password": "admin1",
+    "utype": "internal-B",
+    "firstname": "Admin1",
+    "lastname": "Sati",
+    "email": "admin1@mail.com",
+    "AC": "22222",
+    "balance": 1000,
+    "branch": "Okhla",
+    "address": "Delhi",
+    "phone": "9911223344"
+}
 x3 = {
-        "username":"admin2",
-        "password":"admin2",
-        "utype":"internal-A",
-        "firstname":"Admin2",
-        "lastname":"Sati",
-        "email":"admin2@mail.com",
-        "AC":"22222",
-        "balance":1000,
-        "branch":"Okhla",
-        "address":"Delhi",
-        "phone":"9911223344"
-        }
+    "username": "admin2",
+    "password": "admin2",
+    "utype": "internal-A",
+    "firstname": "Admin2",
+    "lastname": "Sati",
+    "email": "admin2@mail.com",
+    "AC": "22222",
+    "balance": 1000,
+    "branch": "Okhla",
+    "address": "Delhi",
+    "phone": "9911223344"
+}
 
 x4 = {
-        "username":"user1",
-        "password":"user1",
-        "utype":"external-A",
-        "firstname":"User1",
-        "lastname":"Paliwal",
-        "email":"user1@mail.com",
-        "AC":"22222",
-        "balance":5000,
-        "branch":"Okhla",
-        "address":"Delhi",
-        "phone":"9911223344"
-        }
+    "username": "user1",
+    "password": "user1",
+    "utype": "external-A",
+    "firstname": "User1",
+    "lastname": "Paliwal",
+    "email": "user1@mail.com",
+    "AC": "22222",
+    "balance": 5000,
+    "branch": "Okhla",
+    "address": "Delhi",
+    "phone": "9911223344"
+}
 
 # if there is not already a user with username admin
 # create a user with username admin and password = sha256("admin")

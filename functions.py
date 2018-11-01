@@ -1,45 +1,69 @@
 from models import *
-#from app import app
+# from app import app
 from sanitize import *
 from hashlib import sha256
 
 # db.init_app(app)  # initializes database
-# 
+#
 # db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
-# 
+#
 # db.sync_db()
 
 # this function takes in uid and deletes the fields associated with him
 # this would delete all pending requests, transactions, accounts
 # associated with that user
 
+
 def updatePII(uname, fname, lname, mail, add, phone):
-    flag = False 
+    flag = False
     row = User.objects(username=uname).allow_filtering()
     if row.count() == 1:
         id = row[0].id
-        PIIApproval.create(uid=id, first_name=fname, last_name=lname, email=mail,   address=add, phone=mobile, approved=False)
+        PIIApproval.create(
+            uid=id,
+            first_name=fname,
+            last_name=lname,
+            email=mail,
+            address=add,
+            phone=mobile,
+            approved=False)
         flag = True
-    
+
     return flag
 
-def createUser(x): # expects x as dict
+
+def createUser(x):  # expects x as dict
     flag = False
     print type(Account.objects(accountNumber=x["AC"]).count())
     if Account.objects(accountNumber=x["AC"]).count() == 0:
         print 'temp'
-        User.create(username=x["username"], password=sha256(x["password"]).hexdigest(), utype=x ["utype"])
+        User.create(
+            username=x["username"],
+            password=sha256(
+                x["password"]).hexdigest(),
+            utype=x["utype"])
         id = User.objects(username=x["username"]).allow_filtering()[0].uid
-        
-        if 'external' in x["utype"]:
-           
-            PII.create(uid=id, first_name=x["firstname"], last_name=x   ["lastname"]   , email=x["email"], address=x["address"], mobile=x  ["phone"])
 
-            Account.create(uid=id, accountNumber=x["AC"], balance=x ["balance"], bankBranch=x["branch"])
-        
+        if 'external' in x["utype"]:
+
+            PII.create(
+                uid=id,
+                first_name=x["firstname"],
+                last_name=x["lastname"],
+                email=x["email"],
+                address=x["address"],
+                mobile=x["phone"])
+
+            Account.create(
+                uid=id,
+                accountNumber=x["AC"],
+                balance=x["balance"],
+                bankBranch=x["branch"])
+
         flag = True
 
     return flag
+
 
 def deleteUser(userID):
 
