@@ -80,8 +80,22 @@ x4 = {
     "phone": "9911223344"
 }
 
+x5 = {
+    "username": "user2",
+    "password": "user2",
+    "utype": "external-A",
+    "firstname": "User2",
+    "lastname": "Paliwal",
+    "email": "user2@mail.com",
+    "AC": "2222322",
+    "balance": 5000,
+    "branch": "Okhla",
+    "address": "Delhi",
+    "phone": "9911223344"
+}
 # if there is not already a user with username admin
 # create a user with username admin and password = sha256("admin")
+createUser(x5)
 if User.objects().count() == 0:
     createUser(x0)
     createUser(x1)

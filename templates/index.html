@@ -82,6 +82,9 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
 
                             <input class="form-control" type="text" id="amount" 
                             name="amount" placeholder="Amount"> <br>
+
+                            <input class="form-control" type="text" id="token" 
+                            name="token" placeholder="OTP Token"> <br>
     
                             <input type="submit" class="btn btn-danger" style="width:100%;">
                         </form>
@@ -130,6 +133,9 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
 
                             <input class="form-control" type="text" id="amount" 
                             name="amount" placeholder="Amount"> <br>
+
+                            <input class="form-control" type="text" id="token" 
+                            name="token" placeholder="OTP Token"> <br>
     
                             <input type="submit" class="btn btn-danger" style="width:100%;">
                         </form>
@@ -148,6 +154,9 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                         <form action="/debit" method="POST">
                             <input class="form-control" type="text" id="amount" 
                             name="amount" placeholder="Amount"> <br>
+
+                            <input class="form-control" type="text" id="token" 
+                            name="token" placeholder="OTP Token"> <br>
     
                             <input type="submit" class="btn btn-danger" style="width:100%;">
                         </form>
@@ -166,6 +175,9 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                         <form action="/credit" method="POST">
                             <input class="form-control" type="text" id="amount" 
                             name="amount" placeholder="Amount"> <br>
+
+                            <input class="form-control" type="text" id="token" 
+                            name="token" placeholder="OTP Token"> <br>
     
                             <input type="submit" class="btn btn-danger" style="width:100%;">
                         </form>
@@ -198,7 +210,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
             style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 10px;">
                 <label for="address">Address</label>
                 <textarea class="form-control" name="address" id="address" required rows="5">
-                    {{ details["address"] }}
+{{ details["address"] }}
                 </textarea> <br>
 
                 <label for="phone">Phone</label>

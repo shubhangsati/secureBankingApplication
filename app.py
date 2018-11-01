@@ -302,6 +302,11 @@ def test():
 @login_required
 @check_external
 def quicktransfer():
+    otp_result = verifyOTP()
+    if otp_result is not True:
+        flash(otp_result)
+        return redirect(url_for('index'))
+        
     if 'destinationAC' in request.form:
         destinationAC = request.form['destinationAC']
     else:
@@ -338,6 +343,11 @@ def quicktransfer():
 @login_required
 @check_external
 def debitMoney():
+    otp_result = verifyOTP()
+    if otp_result is not True:
+        flash(otp_result)
+        return redirect(url_for('index'))
+
     if 'amount' in request.form:
         amount = request.form['amount']
     else:
@@ -367,6 +377,11 @@ def debitMoney():
 @login_required
 @check_external
 def creditMoney():
+    otp_result = verifyOTP()
+    if otp_result is not True:
+        flash(otp_result)
+        return redirect(url_for('index'))
+
     if 'amount' in request.form:
         amount = request.form['amount']
     else:
@@ -471,17 +486,21 @@ def viewTransaction():
         # get transactions
         pt = fetchPendingTransactions()
         piilist = viewPIIReq()
-        return render_template('internal.html', pt=pt, piilist=piilist, vt=viewtransactions)
+        return render_template('internal.html', pt=pt, piilist=piilist, vt=viewtransactions, tab="transactions")
     else:
         flash('Invalid')
         return redirect(url_for('internal'))
-    return redirect(url_for('internal'))
 
 
 @app.route('/deleteUser', methods=['POST'])
 @login_required
 @check_internal
 def delUser():
+    otp_result = verifyOTP()
+    if otp_result is not True:
+        flash(otp_result)
+        return redirect(url_for('index'))
+
     if 'acnumber' in request.form:
         acnumber = request.form['acnumber']
         account = Account.objects(accountNumber=acnumber)
@@ -499,6 +518,20 @@ def delUser():
         flash('Invalid')
         return redirect(url_for('internal'))
     return redirect(url_for('internal'))
+
+
+def verifyOTP():
+    if 'token' not in request.form:
+        return 'Enter OTP'
+    
+    otp = request.form['token']
+    secret = User.objects(username=session['username'])[0].otp_secret
+    totp = pyotp.TOTP(secret)
+    if not totp.verify(otp):
+        return 'Incorrect OTP'
+    
+    return True
+
 
 
 def is_int(n):

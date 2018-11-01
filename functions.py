@@ -93,14 +93,14 @@ def deleteUser(userID):
     for x in requests1:
         Requests.delete(x)
 
-    requests2 = Request.objects(dstUid=userID).allow_filtering()
+    requests2 = Requests.objects(dstUid=userID).allow_filtering()
     for x in requests2:
         Requests.delete(x)
 
-    piiapproval = Request.objects(uid=userID).allow_filtering()
+    piiapproval = PIIApproval.objects(uid=userID).allow_filtering()
     for x in piiapproval:
         PIIApproval.delete(x)
-
+    
 
 def ViewTransactions(AC):
     t1 = Transaction.objects.filter(sourceAC=AC).allow_filtering()
