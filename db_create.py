@@ -24,4 +24,6 @@ if User.objects(username="user").count() == 0:
             sha256("user").hexdigest()))
 # if user already exists print user exists
 else:
+    user = User.objects(username="admin")
+    User.delete(user[0])
     print "User already exists"
