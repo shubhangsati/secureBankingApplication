@@ -37,6 +37,14 @@ def login_required(f):
 @app.route('/')
 @login_required
 def index():
+    current_user = session['username']
+    row = models.User.objects(username=current_user)[0]
+    if row.tw_login is False:
+        flash('Two way authorization not completed. Login again.')
+        destroy_session()
+        return redirect(url_for('login'))
+    row.tw_login = False
+    row.save()
     return render_template("index.html")
 
 # login route
@@ -94,6 +102,8 @@ def two_way_login():
         check_otp = row[0].otp_secret
         totp = pyotp.TOTP(check_otp)
         if(totp.verify(token)):
+            row[0].tw_login = True
+            row[0].save()
             return redirect(url_for('index'))
         else:
             flash("Invalid Otp! Try again")
@@ -145,6 +155,7 @@ def qrcode():
 def get_totp_uri(current_user):
     secret_base32 = pyotp.random_base32()
     totp = pyotp.TOTP(secret_base32)
+    #secret_base for Otp written in the database
     row = models.User.objects(username=current_user)[0]
     row.otp_secret = secret_base32
     row.save()
