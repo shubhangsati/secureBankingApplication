@@ -70,21 +70,11 @@ def check_internal(f):
 @login_required
 def index():
     current_user = session['username']
-<<<<<<< Updated upstream
     row = models.User.objects(username=current_user)[0]
     if row.tw_login is False:
         flash('Two way authorization not completed. Login again.')
         destroy_session()
         return redirect(url_for('login'))
-    # row.tw_login = False
-    # row.save()
-    return render_template("index.html")
-=======
-    # row = models.User.objects(username=current_user)[0]
-    # if row.tw_login is False:
-    #     flash('Two way authorization not completed. Login again.')
-    #     destroy_session()
-    #     return redirect(url_for('login'))
     # row.tw_login = False
     # row.save()
 
@@ -101,7 +91,6 @@ def index():
     details["utype"] = "1"
     details["branch"] = "admin's branch"
     return render_template("index.html", details=details)
->>>>>>> Stashed changes
 
 # login route
 # uses both methods get and post
