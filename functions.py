@@ -1,17 +1,23 @@
 from models import *
-from app import app
+#from app import app
 from sanitize import *
 
-db.init_app(app)  # initializes database
-
-db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
-
-db.sync_db()
+# db.init_app(app)  # initializes database
+# 
+# db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
+# 
+# db.sync_db()
 
 # this function takes in uid and deletes the fields associated with him
 # this would delete all pending requests, transactions, accounts
 # associated with that user
 
+
+def createUser(x): # expects x as dict
+    User.create(username=x["username"], password=x["password"], utype=x["utype"])
+    id = User.objects(username=x["username"]).allow_filtering()[0].uid
+    PII.create(uid=id, first_name=x["firstname"], last_name=x["lastname"], email=x["email"], address=x["address"], mobile=x["phone"])
+    Account.create(uid=id, accountNumber=x["AC"], balance=x["balance"], bankBranch=x["branch"])
 
 def deleteUser(userID):
 
