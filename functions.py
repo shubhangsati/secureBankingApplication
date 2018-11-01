@@ -12,12 +12,33 @@ from sanitize import *
 # this would delete all pending requests, transactions, accounts
 # associated with that user
 
+def updatePII(uname, fname, lname, mail, add, phone):
+    flag = False 
+    row = User.objects(username=uname).allow_filtering()
+    if row.count() == 1:
+        id = row[0].id
+        PIIApproval.create(uid=id, first_name=fname, last_name=lname, email=mail,   address=add, phone=mobile, approved=False)
+        flag = True
+    
+    return flag
 
 def createUser(x): # expects x as dict
-    User.create(username=x["username"], password=x["password"], utype=x["utype"])
-    id = User.objects(username=x["username"]).allow_filtering()[0].uid
-    PII.create(uid=id, first_name=x["firstname"], last_name=x["lastname"], email=x["email"], address=x["address"], mobile=x["phone"])
-    Account.create(uid=id, accountNumber=x["AC"], balance=x["balance"], bankBranch=x["branch"])
+    flag = False
+    print type(Account.objects(accountNumber=x["AC"]).count())
+    if Account.objects(accountNumber=x["AC"]).count() == 0:
+        print 'temp'
+        User.create(username=x["username"], password=x["password"], utype=x ["utype"])
+        id = User.objects(username=x["username"]).allow_filtering()[0].uid
+        
+        if 'external' in x["utype"]:
+           
+            PII.create(uid=id, first_name=x["firstname"], last_name=x   ["lastname"]   , email=x["email"], address=x["address"], mobile=x  ["phone"])
+
+            Account.create(uid=id, accountNumber=x["AC"], balance=x ["balance"], bankBranch=x["branch"])
+        
+        flag = True
+
+    return flag
 
 def deleteUser(userID):
 
@@ -64,3 +85,20 @@ def ViewTransactions(AC):
     for x in t2:
         views.append(x)
     return views
+
+
+def fetchUserDetails(uname):
+    user = User.objects(username=uname)[0]
+    pii = PII.objects(uid=user.uid).allow_filtering()[0]
+    account = Account.objects(uid=user.uid).allow_filtering()[0]
+    details = {}
+    details["firstname"] = pii.first_name
+    details["lastname"] = pii.last_name
+    details["ac"] = account.accountNumber
+    details["balance"] = account.balance
+    details["email"] = pii.email
+    details["address"] = pii.address
+    details["phone"] = pii.mobile
+    details["utype"] = user.utype
+    details["branch"] = account.bankBranch
+    return details

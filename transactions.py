@@ -1,13 +1,13 @@
 from models import *
-from app import app
+#from app import app
 from sanitize import *
 import time
 
-db.init_app(app)  # initializes database
+# db.init_app(app)  # initializes database
 
-db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
+# db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
 
-db.sync_db()
+# db.sync_db()
 
 # accepts an object of type Transaction
 # type can be 1, 2 or 3
@@ -41,15 +41,16 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
             time=time.asctime(),
             approvalRequired=critical)
 
+        transactionF = None
         if not critical:
             if type == 1:
-                transfer(transaction)
+                transactionF = transfer(transaction)
             elif type == 2:
-                debit(transaction)
+                transactionF = debit(transaction)
             elif type == 3:
-                credit(transaction)
+                transactionF = credit(transaction)
 
-    return flag
+    return (flag, critical, transactionF)
 
 
 def tranfer(transaction):

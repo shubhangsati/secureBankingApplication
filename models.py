@@ -5,7 +5,7 @@ db = CQLAlchemy()  # create a CQLAlchemy wrapper [uses cassandra-driver]
 
 
 class PII(db.Model):
-    uid = db.columns.Text(primary_key=True, required=True)
+    uid = db.columns.UUID(primary_key=True, required=True)
     first_name = db.columns.Text(required=True)
     last_name = db.columns.Text(required=True)
     email = db.columns.Text(required=True)
@@ -30,7 +30,7 @@ class User(db.Model):
 
 
 class Account(db.Model):
-    uid = db.columns.Text(required=True)
+    uid = db.columns.UUID(required=True)
     accountNumber = db.columns.Text(primary_key=True, required=True)
     balance = db.columns.Integer(required=True)
     bankBranch = db.columns.Text(required=True)
@@ -48,7 +48,7 @@ class Transaction(db.Model):
 
 
 class PIIAprroval(db.Model):
-    uid = db.columns.Text(primary_key=True, required=True)
+    uid = db.columns.UUID(primary_key=True, required=True)
     first_name = db.columns.Text(required=True)
     last_name = db.columns.Text(required=True)
     email = db.columns.Text(required=True)
