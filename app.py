@@ -10,6 +10,7 @@ import requests
 import json
 import pyotp
 import pyqrcode
+import datetime
 
 # create a new Flask app
 app = Flask(__name__)
@@ -34,12 +35,23 @@ def login_required(f):
             return redirect(url_for("login"))
     return wrap
 
+
+# to-do as soon as tab closes - session destroyed
+
 # default route
 
 
 @app.route('/')
 @login_required
 def index():
+    current_user = session['username']
+    row = models.User.objects(username=current_user)[0]
+    if row.tw_login is False:
+        flash('Two way authorization not completed. Login again.')
+        destroy_session()
+        return redirect(url_for('login'))
+    row.tw_login = False
+    row.save()
     return render_template("index.html")
 
 # login route
@@ -71,10 +83,16 @@ def login():
                     passInput).hexdigest() != row[0].password:
                 error = 'Invalid credentials. Please try again.'
 
+            elif row[0].session_estd is True:
+                flash("Session already open")
+
             # else log in successful
             else:
                 session['logged_in'] = True
                 session['username'] = unameInput
+                session['login'] = 1
+                row[0].session_estd = True
+                row[0].save()
                 flash("You were just logged in!")
                 if row[0].otp_secret is None or row[0].otp_enabled is False:
                     return redirect(url_for('setup'))
@@ -91,6 +109,12 @@ def login():
 @app.route('/two_way_login', methods=["GET", "POST"])
 @login_required
 def two_way_login():
+
+    if session['login'] == 1:
+        session['login'] = 0
+    else:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         token = request.form['token']
         current_user = session['username']
@@ -98,6 +122,9 @@ def two_way_login():
         check_otp = row[0].otp_secret
         totp = pyotp.TOTP(check_otp)
         if(totp.verify(token)):
+            row[0].tw_login = True
+            row[0].save()
+            flash("Login successful")
             return redirect(url_for('index'))
         else:
             flash("Invalid Otp! Try again")
@@ -109,6 +136,12 @@ def two_way_login():
 @app.route('/setup', methods=["GET", "POST"])
 @login_required
 def setup():
+
+    if session['login'] == 1:
+        session['login'] = 0
+    else:
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         token = request.form['token']
         current_user = session['username']
@@ -119,7 +152,8 @@ def setup():
         if(totp.verify(token)):
             row.otp_enabled = True
             row.save()
-            # return redirect(url_for('login'))
+            flash("Otp registration successful. Please login again")
+            return redirect(url_for('login'))
         else:
             flash("Invalid Otp!! Verification Unsuccessful. Try again")
             return redirect(url_for('setup'))
@@ -132,7 +166,11 @@ def setup():
 @app.route('/qrcode')
 @login_required
 def qrcode():
+
     current_user = session['username']
+    row = models.User.objects(username=current_user)[0]
+    if(row.otp_enabled is True):
+        return redirect(url_for('login'))
 
     # render qrcode for google authenticator
     url = pyqrcode.create(get_totp_uri(current_user))
@@ -148,6 +186,7 @@ def qrcode():
 def get_totp_uri(current_user):
     secret_base32 = pyotp.random_base32()
     totp = pyotp.TOTP(secret_base32)
+    # secret_base for Otp written in the database
     row = models.User.objects(username=current_user)[0]
     row.otp_secret = secret_base32
     row.save()
@@ -177,8 +216,13 @@ def logout():
 
 
 def destroy_session():
+    current_user = session['username']
+    row = models.User.objects(username=current_user)[0]
+    row.session_estd = False
+    row.save()
     session.pop('logged_in', None)
     session.pop('username', None)
+    session.pop('login', None)
 
 
 """@socketio.on('disconnect')

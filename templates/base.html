@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/keyboard.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Rokkitt" rel="stylesheet">
         <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="{{ url_for('static', filename='js/keyboard.js') }}"></script>
@@ -20,6 +22,8 @@
                 margin-top: 3%;
             }
         </style>
+        {% block stylesheets %}
+        {% endblock %}
 
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
         <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
@@ -45,7 +49,7 @@
         <div class="container">
             <img src="{{ url_for('static', filename='images/banklogo.png') }}" alt="Bank"
             height="100px">
-            <span style="font-size: 50px; line-height: 100px; 
+            <span style="font-size: 50px; font-weight: bold; line-height: 100px; 
             vertical-align: bottom; font-family: 'Rokkitt', serif;">Secure Bank</span>
         </div>
         <div class="container">
@@ -55,14 +59,20 @@
             <br>
 
             {% if error %}
-                <p class="error"><strong>Error: </strong>{{ error }}</p>
+                <div class="error-message">
+                    <p class="error"><strong>Error: </strong>{{ error }}</p>
+                </div>
             {% endif %}
 
             <br>
 
-            {% for message in get_flashed_messages() %}
-                {{ message }}
-            {% endfor %}
+            <div class="flash-message-wrapper">
+                {% for message in get_flashed_messages() %}
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <!-- Add external scripts here -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
@@ -71,6 +81,7 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/2c00ed3864.js"></script>
         <script src='https://www.google.com/recaptcha/api.js'></script>
+        <script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
 
         
         
@@ -80,6 +91,15 @@
                 alert("Right click has been disabled");
                 return false;
             });
+
+            setTimeout(function() {
+                $(".flash-message").fadeOut();
+                $(".error-message").fadeOut();
+                setTimeout(function() {
+                    $(".flash-message").remove();
+                    $(".error-message").remove();
+                }, 1000);
+            }, 3000);
         </script>
         
         {% block scripts %}

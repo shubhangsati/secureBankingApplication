@@ -9,3 +9,7 @@ class BaseConfig(object):
     CASSANDRA_HOSTS = ['127.0.0.1']  # list of cassandra cluster IP addresses.
     CASSANDRA_KEYSPACE = 'SBS'  # name of the keyspace (database)
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
+
+
+class DevelopmentConfig(BaseConfig):
+    DEBUG = True
