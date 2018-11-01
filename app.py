@@ -133,10 +133,10 @@ def two_way_login():
 @login_required
 def setup():
 
-    if session['login'] == 1:
-        session['login'] = 0
-    else:
-        return redirect(url_for('login'))
+    # if session['login'] == 1:
+    #     session['login'] = 0
+    # else:
+    #     return redirect(url_for('login'))
 
     if request.method == 'POST':
         token = request.form['token']
@@ -146,11 +146,13 @@ def setup():
         check_otp = row.otp_secret
         totp = pyotp.TOTP(check_otp)
         if(totp.verify(token)):
+            print("successful")
             row.otp_enabled = True
             row.save()
             flash("Otp registration successful. Please login again")
             return redirect(url_for('login'))
         else:
+            print("unsuccessful")
             flash("Invalid Otp!! Verification Unsuccessful. Try again")
             return redirect(url_for('setup'))
     return render_template('otp_qrcode.html'), 200, {
