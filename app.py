@@ -181,10 +181,10 @@ def destroy_session():
     session.pop('username', None)
 
 
-@socketio.on('disconnect')
+"""@socketio.on('disconnect')
 def disconnect_user():
     destroy_session()
-    session.pop('yourkey', None)
+    session.pop('yourkey', None)"""
 
 # test route to test the server
 
