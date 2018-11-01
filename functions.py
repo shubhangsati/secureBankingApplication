@@ -112,12 +112,28 @@ def ViewTransactions(AC):
         views.append(x)
     return views
 
-def approveTransaction(trancId):
-    row = Transaction.objects(transactionId=trancId).allow_filtering()[0]
+
+def fetchPendingTransactions():
+    rows = Transaction.objects(approvalRequired=True, completed=False).allow_filtering()
+    return rows
+
+def approveTransaction(index):
+    flag = False 
+    rows = fetchPendingTransactions()
+    if index <= len(rows):
+        T = rows[index]
+        if T.transactionType == 1:
+            transfer(T)
+        elif T.transactionType == 2:
+            debit(T) 
+        elif T.transactionType == 3:
+            credit(T)
+        flag = True
+    return flag
 
 
 def viewPIIReq():
-    pii = PIIApproval.objects().allow_filtering()
+    pii = PIIApproval.objects(approved=False).allow_filtering()
     views=[]
     for x in pii:
         view.append(x)
@@ -125,15 +141,23 @@ def viewPIIReq():
 
 # approvePII takes in index
 def approvePII(i):
+    flag = False
     temp = viewPIIReq()
-    pii = temp[i]
-    ID = pii.uid
-    PII.delete(pii)
-    PII.create
-    uname = User.objects(uid=ID)[0].username
-    pii.updatePII(uname, pii.first_name, pii.last_name, )
+    if i<=len(temp):
+        piiapproval = temp[i]
+        ID = piiapproval.uid
 
-    return 
+        tp = PII.objects(uid=ID).allow_filtering()
+        PII.delete(tp[0])
+
+        PII.create(uid=ID, first_name=piiapproval.first_name, last_name=piiapproval.last_name, email=piiapproval.email,address=piiapproval.address, mobile=piiapproval.mobile)
+        
+        piiapproval.approved=True
+        piiapproval.save()
+
+        flag = True
+    return flag 
+
 
 def fetchUserDetails(uname):
     user = User.objects(username=uname)[0]
@@ -152,10 +176,3 @@ def fetchUserDetails(uname):
     return details
 
 
-def fetchPendingTransactions():
-    rows = Transaction.objects(approvalRequired=True, completed=False).allow_filtering()
-    return rows
-
-
-def approveTransaction(index):
-    rows = fetchPendingTransactions()
