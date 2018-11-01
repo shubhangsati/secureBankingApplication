@@ -2,6 +2,7 @@ from models import *
 # from app import app
 from sanitize import *
 from hashlib import sha256
+from transactions import *
 
 # db.init_app(app)  # initializes database
 #
@@ -34,7 +35,7 @@ def updatePII(uname, fname, lname, mail, add, phone):
 
 def createUser(x):  # expects x as dict
     flag = False
-    print type(Account.objects(accountNumber=x["AC"]).count())
+    # print type(Account.objects(accountNumber=x["AC"]).count())
     if Account.objects(accountNumber=x["AC"]).count() == 0:
         print 'temp'
         User.create(
@@ -110,6 +111,63 @@ def ViewTransactions(AC):
     for x in t2:
         views.append(x)
     return views
+
+
+def fetchPendingTransactions():
+    rows = Transaction.objects(
+        approvalRequired=True,
+        completed=False).allow_filtering()
+    return rows
+
+
+def approveTransaction(index):
+    flag = False
+    rows = fetchPendingTransactions()
+    if index <= len(rows):
+        T = rows[index]
+        if T.transactionType == 1:
+            transfer(T)
+        elif T.transactionType == 2:
+            debit(T)
+        elif T.transactionType == 3:
+            credit(T)
+        flag = True
+    return flag
+
+
+def viewPIIReq():
+    pii = PIIApproval.objects(approved=False).allow_filtering()
+    views = []
+    for x in pii:
+        view.append(x)
+    return views
+
+# approvePII takes in index
+
+
+def approvePII(i):
+    flag = False
+    temp = viewPIIReq()
+    if i <= len(temp):
+        piiapproval = temp[i]
+        ID = piiapproval.uid
+
+        tp = PII.objects(uid=ID).allow_filtering()
+        PII.delete(tp[0])
+
+        PII.create(
+            uid=ID,
+            first_name=piiapproval.first_name,
+            last_name=piiapproval.last_name,
+            email=piiapproval.email,
+            address=piiapproval.address,
+            mobile=piiapproval.mobile)
+
+        piiapproval.approved = True
+        piiapproval.save()
+
+        flag = True
+    return flag
 
 
 def fetchUserDetails(uname):

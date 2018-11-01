@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, session, f
 from functools import wraps
 from flask_socketio import SocketIO, emit
 from models import db, User
-from functions import fetchUserDetails, updatePII
+from functions import *
 from io import BytesIO
 import hashlib
 import models
@@ -418,24 +418,56 @@ def PIImod():
 @app.route('/approveTransaction', methods=['POST'])
 @login_required
 @check_internal
-def approveTransaction():
+def approveTransaction1():
     if 'approveTransactionIndex' in request.form:
         approveIndex = request.form['approveTransactionIndex']
     else:
         flash('Invalid')
         return redirect(url_for('internal'))
 
+    if is_int(approveIndex):
+        approveIndex = int(approveIndex) - 1
+
+    result = approveTransaction(approveIndex)
+    if result:
+        flash("Transaction -- Approved")
+    else:
+        flash("Invalid input")
+    return redirect(url_for('internal'))
+
 
 @app.route('/approvePII', methods=['POST'])
 @login_required
 @check_internal
-def approvePII():
+def approvePII1():
     if 'approvePIIIndex' in request.form:
         approveIndex = request.form['approvePIIIndex']
     else:
         flash('Invalid')
         return redirect(url_for('internal'))
+    if is_int(approveIndex):
+        approveIndex = int(approveIndex) - 1
+    result = approvePII(approveIndex)
+    if result:
+        flash("PII update -- Approved")
+    else:
+        flash("Invalid input")
+    return redirect(url_for('internal'))
 
+
+@app.route('/viewTransaction', methods=['POST'])
+@login_required
+@check_internal
+def viewTransaction():
+    if 'acnumber' in request.form:
+        acnumber = request.form['acnumber']
+        viewtransactions = ViewTransactions(acnumber)
+        # get transactions
+        return render_template('internal', vt=viewtransactions)
+    else:
+        flash('Invalid')
+        return redirect(url_for('internal'))
+    return redirect(url_for('internal'))
 
 def is_int(n):
     try:
