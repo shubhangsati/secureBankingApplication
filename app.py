@@ -15,7 +15,7 @@ import datetime
 # create a new Flask app
 app = Flask(__name__)
 # load configurations from config.py
-app.config.from_object("config.BaseConfig")
+app.config.from_object("config.DevelopmentConfig")
 # initialize database
 db.init_app(app)
 # app.secret_key = "random"
@@ -50,8 +50,8 @@ def index():
         flash('Two way authorization not completed. Login again.')
         destroy_session()
         return redirect(url_for('login'))
-    row.tw_login = False
-    row.save()
+    # row.tw_login = False
+    # row.save()
     return render_template("index.html")
 
 # login route
@@ -73,8 +73,9 @@ def login():
         # get username and password from form
         unameInput = request.form['username']
         passInput = request.form['password']
-        captcha_response = request.form['g-recaptcha-response']
-        if verify_captcha(captcha_response):
+        # captcha_response = request.form['g-recaptcha-response']
+        # if verify_captcha(captcha_response):
+        if True:
             # get row from database
             row = models.User.objects(username=unameInput)
             # if row count is 0 or password input from form
@@ -221,6 +222,7 @@ def destroy_session():
     current_user = session['username']
     row = models.User.objects(username=current_user)[0]
     row.session_estd = False
+    row.tw_login = False
     row.save()
     session.pop('logged_in', None)
     session.pop('username', None)
@@ -238,6 +240,12 @@ def disconnect_user():
 @app.route('/test')
 def test():
     return "It works!"
+
+
+@app.route('/internal')
+def internal():
+    return render_template('internal.html')
+
 
 
 if __name__ == "__main__":
