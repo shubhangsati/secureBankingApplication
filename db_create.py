@@ -18,6 +18,10 @@ if User.objects(username="admin").count() == 0:
     user1 = User.create(
         username="admin", password=str(
             sha256("admin").hexdigest()))
+if User.objects(username="user").count() == 0:
+    user1 = User.create(
+        username="user", password=str(
+            sha256("user").hexdigest()))
 # if user already exists print user exists
 else:
     print "User already exists"
