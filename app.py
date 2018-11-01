@@ -115,7 +115,8 @@ def setup():
         if(totp.verify(token)):
             row.otp_enabled = True
             row.save()
-            # return redirect(url_for('login'))
+            flash("Otp registration successful. Please login again")
+            return redirect(url_for('login'))
         else:
             flash("Invalid Otp!! Verification Unsuccessful. Try again")
             return redirect(url_for('setup'))
