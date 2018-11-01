@@ -9,6 +9,7 @@ import requests
 import json
 import pyotp
 import pyqrcode
+import datetime
 
 # create a new Flask app
 app = Flask(__name__)
@@ -104,6 +105,7 @@ def two_way_login():
         if(totp.verify(token)):
             row[0].tw_login = True
             row[0].save()
+            flash("Login successful")
             return redirect(url_for('index'))
         else:
             flash("Invalid Otp! Try again")
