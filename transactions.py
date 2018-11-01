@@ -20,9 +20,11 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
     flag = False
     source = clean(source)
     destination = clean(destination)
-    f1 = Account.objects(accountNumber=destination).count() == 1
+    f1 = Account.objects(
+        accountNumber=destination).allow_filtering().count() == 1
     if source != "BANK":
-        f2 = Account.objects(accountNumber=destination).count() == 1
+        f2 = Account.objects(
+            accountNumber=destination).allow_filtering().count() == 1
     else:
         f2 = True
     if check_amount(amt) and f1 and f2:
@@ -51,8 +53,10 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
 
 
 def tranfer(transaction):
-    src = Account.objects(accountNumber=transaction.sourceAC)[0]
-    dst = Account.objects(accountNumber=transaction.destinationAC)[0]
+    src = Account.objects(
+        accountNumber=transaction.sourceAC).allow_filtering()[0]
+    dst = Account.objects(
+        accountNumber=transaction.destinationAC).allow_filtering()[0]
     amt = transaction.amount
     completed = transaction.completed
 
@@ -70,7 +74,8 @@ def tranfer(transaction):
 
 
 def debit(transaction):
-    dst = Account.objects(accountNumber=transaction.destinationAC)[0]
+    dst = Account.objects(
+        accountNumber=transaction.destinationAC).allow_filtering()[0]
     amt = transaction.amount
     completed = transaction.completed
 
@@ -85,7 +90,8 @@ def debit(transaction):
 
 
 def credit():
-    dst = Account.objects(accountNumber=transaction.destinationAC)[0]
+    dst = Account.objects(
+        accountNumber=transaction.destinationAC).allow_filtering()[0]
     amt = transaction.amount
     completed = transaction.completed
 
