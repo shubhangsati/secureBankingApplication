@@ -114,18 +114,21 @@ def ViewTransactions(AC):
 
 
 def fetchPendingTransactions():
-    rows = Transaction.objects(approvalRequired=True, completed=False).allow_filtering()
+    rows = Transaction.objects(
+        approvalRequired=True,
+        completed=False).allow_filtering()
     return rows
 
+
 def approveTransaction(index):
-    flag = False 
+    flag = False
     rows = fetchPendingTransactions()
     if index <= len(rows):
         T = rows[index]
         if T.transactionType == 1:
             transfer(T)
         elif T.transactionType == 2:
-            debit(T) 
+            debit(T)
         elif T.transactionType == 3:
             credit(T)
         flag = True
@@ -134,29 +137,37 @@ def approveTransaction(index):
 
 def viewPIIReq():
     pii = PIIApproval.objects(approved=False).allow_filtering()
-    views=[]
+    views = []
     for x in pii:
         view.append(x)
     return views
 
 # approvePII takes in index
+
+
 def approvePII(i):
     flag = False
     temp = viewPIIReq()
-    if i<=len(temp):
+    if i <= len(temp):
         piiapproval = temp[i]
         ID = piiapproval.uid
 
         tp = PII.objects(uid=ID).allow_filtering()
         PII.delete(tp[0])
 
-        PII.create(uid=ID, first_name=piiapproval.first_name, last_name=piiapproval.last_name, email=piiapproval.email,address=piiapproval.address, mobile=piiapproval.mobile)
-        
-        piiapproval.approved=True
+        PII.create(
+            uid=ID,
+            first_name=piiapproval.first_name,
+            last_name=piiapproval.last_name,
+            email=piiapproval.email,
+            address=piiapproval.address,
+            mobile=piiapproval.mobile)
+
+        piiapproval.approved = True
         piiapproval.save()
 
         flag = True
-    return flag 
+    return flag
 
 
 def fetchUserDetails(uname):
@@ -174,5 +185,3 @@ def fetchUserDetails(uname):
     details["utype"] = user.utype
     details["branch"] = account.bankBranch
     return details
-
-
