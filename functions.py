@@ -139,7 +139,7 @@ def viewPIIReq():
     pii = PIIApproval.objects(approved=False).allow_filtering()
     views = []
     for x in pii:
-        view.append(x)
+        views.append(x)
     return views
 
 # approvePII takes in index

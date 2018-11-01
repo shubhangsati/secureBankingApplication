@@ -49,7 +49,6 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     <table cellpadding="10px" cellspacing="5px">
                         <tr>
                             <td style="font-weight: bold;">Transaction Type</td>
-                            <td style="font-weight: bold;">Transaction Id</td>
                             <td style="font-weight: bold;">Source A/C</td>
                             <td style="font-weight: bold;">Destination A/C</td>
                             <td style="font-weight: bold;">Amount</td>
@@ -57,26 +56,38 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                             <td style="font-weight: bold;">Approval</td>
                             <td style="font-weight: bold;">Completed</td>
                         </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>5</td>
-                            <td>1251571928750</td>
-                            <td>1251571928750</td>
-                            <td>&#8377; 1000</td>
-                            <td>1:20 pm</td>
-                            <td><input type="checkbox" value="approved"></td>
-                            <td style="color: green">YES</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>5</td>
-                            <td>1251571928750</td>
-                            <td>1251571928750</td>
-                            <td>&#8377; 1000</td>
-                            <td>1:20 pm</td>
-                            <td><input type="checkbox" value="approved"></td>
-                            <td style="color: red">NO</td>
-                        </tr>
+                        <form action="/approveTransaction" method="POST">
+                        {% for t in pt %}
+                            <tr>
+                                {% if t.transactionType == 2 %}
+                                    <td>Debit</td>
+                                    <td>{{ t.destinationAC }}</td>
+                                    <td>{{ t.sourceAC }}</td>
+                                {% endif %}
+
+                                {% if t.transactionType == 3 %}
+                                    <td>Credit</td>
+                                    <td>{{ t.sourceAC }}</td>
+                                    <td>{{ t.destinationAC }}</td>
+                                {% endif %}
+
+                                <td>&#8377; {{ t.amount }}</td>
+                                <td>{{ t.time }}</td>
+                                <td>
+                                    <input type="radio" name="approveTransactionIndex" value="{{ loop.index }}">
+                                </td>
+                                {% if t.completed %}
+                                    <td style="color: green">
+                                        YES
+                                    </td>
+                                {% else %}
+                                    <td style="color: red">
+                                        NO
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </form>
                     </table>
                     </font>
                     </div>
@@ -104,14 +115,61 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     </table>
                     <hr style="border: none; height: 5px; background: #D80027;">
                     <div class="form-group">
-                        <form action="" method="POST">
-                            <input class="form-control" type="text" id="destinationAC" 
-                            name="destinationAC" placeholder="Account Number"><br>
+                        <form action="/viewTransactions" method="POST">
+                            <input class="form-control" type="text" 
+                            name="acnumber" placeholder="Account Number"><br>
     
                             <input type="submit" class="btn btn-danger" style="width:100%;">
                         </form>
                     </div>
                 </div>
+                {% if vt is not none %}
+                    <div class="col-md-12">
+                        <table cellpadding="10px" cellspacing="5px">
+                            <tr>
+                                <td style="font-weight: bold;">Transaction Type</td>
+                                <td style="font-weight: bold;">Source A/C</td>
+                                <td style="font-weight: bold;">Destination A/C</td>
+                                <td style="font-weight: bold;">Amount</td>
+                                <td style="font-weight: bold;">Transaction Time</td>
+                                <td style="font-weight: bold;">Approval</td>
+                                <td style="font-weight: bold;">Completed</td>
+                            </tr>
+                            <form action="/approveTransaction" method="POST">
+                            {% for t in pt %}
+                                <tr>
+                                    {% if t.transactionType == 2 %}
+                                        <td>Debit</td>
+                                        <td>{{ t.destinationAC }}</td>
+                                        <td>{{ t.sourceAC }}</td>
+                                    {% endif %}
+    
+                                    {% if t.transactionType == 3 %}
+                                        <td>Credit</td>
+                                        <td>{{ t.sourceAC }}</td>
+                                        <td>{{ t.destinationAC }}</td>
+                                    {% endif %}
+    
+                                    <td>&#8377; {{ t.amount }}</td>
+                                    <td>{{ t.time }}</td>
+                                    <td>
+                                        <input type="radio" name="approveTransactionIndex" value="{{ loop.index }}">
+                                    </td>
+                                    {% if t.completed %}
+                                        <td style="color: green">
+                                            YES
+                                        </td>
+                                    {% else %}
+                                        <td style="color: red">
+                                            NO
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </form>
+                        </table>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -156,8 +214,6 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     <font size="3">
                     <table cellpadding="10px" cellspacing="5px">
                         <tr>
-                            <td style="font-weight: bold;">Account Number</td>
-                            <td style="font-weight: bold;">Username</td>
                             <td style="font-weight: bold;">First Name</td>
                             <td style="font-weight: bold;">Last Name</td>
                             <td style="font-weight: bold;">E-mail</td>
@@ -165,26 +221,17 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                             <td style="font-weight: bold;">Phone</td>
                             <td style="font-weight: bold;">Approve</td>
                         </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>5</td>
-                            <td>1251571928750</td>
-                            <td>1251571928750</td>
-                            <td>&#8377; 1000</td>
-                            <td>1:20 pm</td>
-                            <td>YES</td>
-                            <td><input type="checkbox" value="approved"></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>5</td>
-                            <td>1251571928750</td>
-                            <td>1251571928750</td>
-                            <td>&#8377; 1000</td>
-                            <td>1:20 pm</td>
-                            <td>YES</td>
-                            <td><input type="checkbox" value="approved"></td>
-                        </tr>
+                        <form action="/approvePII" method="POST"></form>
+                        {% for p in piilist %}
+                            <tr>
+                                <td>{{ p.first_name }}</td>
+                                <td>{{ p.last_name }}</td>
+                                <td>{{ p.email }}</td>
+                                <td>{{ p.address }}</td>
+                                <td>{{ p.mobile }}</td>
+                                <td><input type="radio" name="approvePIIIndex" value="{{ loop.index }}"></td>
+                            </tr>
+                        {% endfor %}
                     </table>
                     </font>
                     </div>

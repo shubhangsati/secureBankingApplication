@@ -72,6 +72,7 @@ def transfer(transaction):
             src.update(balance=s)
             dst.update(balance=d)
             transaction.completed = True
+            transaction.save()
 
     return transaction.completed
 
@@ -88,6 +89,7 @@ def debit(transaction):
             d -= amt
             dst.update(balance=d)
             transaction.completed = True
+            transaction.save()
 
     return transaction.completed
 
@@ -103,5 +105,6 @@ def credit(transaction):
         d += amt
         dst.update(balance=d)
         transaction.completed = True
+        transaction.save()
 
     return transaction.completed

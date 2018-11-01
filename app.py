@@ -44,6 +44,8 @@ def check_external(f):
         if 'logged_in' in session and 'username' in session:
             if 'utype' in session and 'external' in session['utype']:
                 return f(*args, **kwargs)
+            else:
+                return redirect(url_for('internal'))
         else:
             flash('You need to login as external user.')
             return redirect(url_for("logout"))
@@ -56,6 +58,8 @@ def check_internal(f):
         if 'logged_in' in session and 'username' in session:
             if 'utype' in session and 'internal' in session['utype']:
                 return f(*args, **kwargs)
+            else:
+                return redirect(url_for('index'))
         else:
             flash('You need to login as internal user.')
             return redirect(url_for("logout"))
