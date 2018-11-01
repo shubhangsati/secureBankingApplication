@@ -66,9 +66,9 @@ def check_internal(f):
 
 # default route
 
-
 @app.route('/')
 @login_required
+@check_external
 def index():
     current_user = session['username']
     row = models.User.objects(username=current_user)[0]
@@ -86,6 +86,19 @@ def index():
 # uses both methods get and post
 
 
+@app.route('/internal')
+@login_required
+@check_internal
+def internal():
+    current_user = session['username']
+    row = models.User.objects(username=current_user)[0]
+    if row.tw_login is False:
+        flash('Two way authorization not completed. Login again.')
+        destroy_session()
+        return redirect(url_for('login'))
+    return render_template('internal.html')
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # session.permanent = True
@@ -93,7 +106,10 @@ def login():
     # load index page if user is logged in
     # Todo: add more checks
     if 'logged_in' in session and session['logged_in']:
-        return redirect(url_for("index"))
+        if 'external' in session['utype']:
+            return redirect(url_for('index'))
+        else:
+            return redirect(url_for('internal'))
 
     # error string
     error = None
@@ -157,10 +173,14 @@ def two_way_login():
             row[0].tw_login = True
             row[0].save()
             flash("Login successful")
-            return redirect(url_for('index'))
+            if 'external' in session['utype']:
+                return redirect(url_for('index'))
+            else:
+                return redirect(url_for('internal'))
+
         else:
             flash("Invalid Otp! Try again")
-            return redirect(url_for('two_way_login'))
+            return redirect(url_for('login'))
 
     return render_template('two_way_login.html')
 
@@ -245,7 +265,7 @@ def logout():
     # pop information stored in the session
     destroy_session()
     flash("You were just logged out!")
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 def destroy_session():
@@ -270,11 +290,6 @@ def disconnect_user():
 @app.route('/test')
 def test():
     return "It works!"
-
-
-@app.route('/internal')
-def internal():
-    return render_template('internal.html')
 
 
 @app.route('/quicktransfer', methods=['POST'])
@@ -398,6 +413,36 @@ def PIImod():
     else:
         flash("Invalid input")
     return redirect(url_for('index'))
+
+
+@app.route('/approveTransaction', methods=['POST'])
+@login_required
+@check_internal
+def approveTransaction():
+    if 'approveTransactionIndex' in request.form:
+        approveIndex = request.form['approveTransactionIndex']
+    else:
+        flash('Invalid')
+        return redirect(url_for('internal'))
+
+
+@app.route('/approvePII', methods=['POST'])
+@login_required
+@check_internal
+def approvePII():
+    if 'approvePIIIndex' in request.form:
+        approveIndex = request.form['approvePIIIndex']
+    else:
+        flash('Invalid')
+        return redirect(url_for('internal'))
+
+
+def is_int(n):
+    try:
+        int(n)
+        return True
+    except ValueError:
+        return False
 
 
 if __name__ == "__main__":
