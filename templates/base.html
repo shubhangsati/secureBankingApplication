@@ -87,10 +87,10 @@
         
         <!-- inline scripts here -->
         <script>
-            // $(document).bind("contextmenu", function(e) {
-            //     alert("Right click has been disabled");
-            //     return false;
-            // });
+            $(document).bind("contextmenu", function(e) {
+                alert("Right click has been disabled");
+                return false;
+            });
 
             setTimeout(function() {
                 $(".flash-message").fadeOut();
@@ -100,6 +100,10 @@
                     $(".error-message").remove();
                 }, 1000);
             }, 3000);
+
+            function sanitize(userInput) {
+                return userInput.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+            }
         </script>
         
         {% block scripts %}

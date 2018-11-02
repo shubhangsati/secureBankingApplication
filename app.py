@@ -17,7 +17,7 @@ from transactions import *
 # create a new Flask app
 app = Flask(__name__)
 # load configurations from config.py
-app.config.from_object("config.DevelopmentConfig")
+app.config.from_object("config.BaseConfig")
 # initialize database
 db.init_app(app)
 # app.secret_key = "random"
@@ -142,8 +142,8 @@ def login():
         # get username and password from form
         unameInput = request.form['username']
         passInput = request.form['password']
-        # captcha_response = request.form['g-recaptcha-response']
-        # if verify_captcha(captcha_response):
+        captcha_response = request.form['g-recaptcha-response']
+        if verify_captcha(captcha_response):
         if True:
             # get row from database
             row = models.User.objects(username=unameInput)
@@ -524,7 +524,11 @@ def delUser():
     otp_result = verifyOTP()
     if otp_result is not True:
         flash(otp_result)
-        return redirect(url_for('index'))
+        return redirect(url_for('internal'))
+
+    if session['utype'] != 'externalC':
+        flash('Function not allowed')
+        return redirect(url_for('internal'))
 
     if 'acnumber' in request.form:
         acnumber = request.form['acnumber']
