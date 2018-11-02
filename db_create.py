@@ -95,13 +95,13 @@ x5 = {
 }
 # if there is not already a user with username admin
 # create a user with username admin and password = sha256("admin")
-# createUser(x5)
 if User.objects().count() == 0:
     createUser(x0)
     createUser(x1)
     createUser(x2)
     createUser(x3)
     createUser(x4)
+    createUser(x5)
 # if user already exists print user exists
 else:
     # u1 = User.objects(username='1')
