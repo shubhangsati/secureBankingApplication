@@ -37,12 +37,12 @@ def before_request():
             session['last_active'] = now
             flash("Session expired")
             return redirect(url_for("logout"))
-    except:
+    except BaseException:
         pass
 
     try:
         session['last_active'] = now
-    except:
+    except BaseException:
         pass
 
 
@@ -325,7 +325,7 @@ def quicktransfer():
     if otp_result is not True:
         flash(otp_result)
         return redirect(url_for('index'))
-        
+
     if 'destinationAC' in request.form:
         destinationAC = request.form['destinationAC']
     else:
@@ -433,7 +433,7 @@ def PIImod():
     otp_result = verifyOTP()
     if otp_result is not True:
         flash(otp_result)
-    return redirect(url_for('index'))
+        return redirect(url_for('index'))
 
     required = {
         'firstname': None,
@@ -510,7 +510,8 @@ def viewTransaction():
         # get transactions
         pt = fetchPendingTransactions()
         piilist = viewPIIReq()
-        return render_template('internal.html', pt=pt, piilist=piilist, vt=viewtransactions, tab="transactions")
+        return render_template(
+            'internal.html', pt=pt, piilist=piilist, vt=viewtransactions, tab="transactions")
     else:
         flash('Invalid')
         return redirect(url_for('internal'))
@@ -544,18 +545,49 @@ def delUser():
     return redirect(url_for('internal'))
 
 
+@app.route('/viewlast10transactions', methods=['POST'])
+@login_required
+@check_external
+def viewlast10transactions():
+    otp_result = verifyOTP()
+    if otp_result is not True:
+        flash(otp_result)
+        return redirect(url_for('index'))
+    
+    userid = User.objects(username=session['username'])[0].uid
+    acnumber = Account.objects(uid=userid).allow_filtering()[0].accountNumber
+    allTransactions = ViewTransactions(acnumber)
+
+
+    def compareTransactions(t1, t2):
+        time1 = datetime.datetime.strptime(t1.time, '%c')
+        time2 = datetime.datetime.strptime(t2.time, '%c')
+        if time1 < time2:
+            return -1
+        if time1 == time2:
+            return 0
+        if time1 > time2:
+            return 1
+
+
+    allTransactions.sort(cmp=compareTransactions, reverse=True)
+    last10transactions = allTransactions[:10]
+    details = fetchUserDetails(session['username'])
+    return render_template("index.html", details=details, 
+    last10transactions=last10transactions, currenttab='transactions_last10transactions')
+
+
 def verifyOTP():
     if 'token' not in request.form:
         return 'Enter OTP'
-    
+
     otp = request.form['token']
     secret = User.objects(username=session['username'])[0].otp_secret
     totp = pyotp.TOTP(secret)
     if not totp.verify(otp):
         return 'Incorrect OTP'
-    
-    return True
 
+    return True
 
 
 def is_int(n):

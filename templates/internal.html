@@ -279,7 +279,7 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
         {% if currenttab is defined %}
             $.each($('.tab'), function(k, v) {
                 if (v.classList.contains("tab")) {
-                    if (v.getAttribute("tab") == "{{ currenttab }}")
+                    if (v.getAttribute("tab") === "{{ currenttab }}")
                         v.click();
                 }
             });

@@ -100,7 +100,7 @@ def deleteUser(userID):
     piiapproval = PIIApproval.objects(uid=userID).allow_filtering()
     for x in piiapproval:
         PIIApproval.delete(x)
-    
+
 
 def ViewTransactions(AC):
     t1 = Transaction.objects.filter(sourceAC=AC).allow_filtering()

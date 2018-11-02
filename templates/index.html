@@ -115,6 +115,11 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                     Credit
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 horz-tab" tab="last10transactions" style="border-bottom-left-radius: 5px;">
+                    View last 10 transactions
+                </div>
+            </div>
         </div>
         <div class="col-md-7 card" 
         style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 20px;">
@@ -182,6 +187,66 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                             <input type="submit" class="btn btn-danger" style="width:100%;">
                         </form>
                     </div>
+                </div>
+            </div>
+            <div class="row tab-data-Horz" id="last10transactions">
+                <div class="col-md-12">
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td><h5 style="font-weight: bold;">Last 10 transactions</h5></td>
+                        </tr>
+                    </table>
+                    <hr style="border: none; height: 5px; background: #D80027;">
+                    <div class="form-group">
+                        <form action="/viewlast10transactions" method="POST">
+
+                            <input class="form-control" type="text" id="token" 
+                            name="token" placeholder="OTP Token"> <br>
+    
+                            <input type="submit" class="btn btn-danger" style="width:100%;">
+                        </form>
+                    </div>
+                    {% if last10transactions is defined %}
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td style="font-weight: bold;">Transaction Type</td>
+                            <td style="font-weight: bold;">Source A/C</td>
+                            <td style="font-weight: bold;">Destination A/C</td>
+                            <td style="font-weight: bold;">Amount</td>
+                            <td style="font-weight: bold;">Transaction Time</td>
+                            <td style="font-weight: bold;">Completed</td>
+                        </tr>
+                        <form action="/approveTransaction" method="POST">
+                        {% for t in last10transactions %}
+                            <tr>
+                                {% if t.transactionType == 2 %}
+                                    <td>Debit</td>
+                                    <td>{{ t.destinationAC }}</td>
+                                    <td>{{ t.sourceAC }}</td>
+                                {% endif %}
+
+                                {% if t.transactionType == 3 %}
+                                    <td>Credit</td>
+                                    <td>{{ t.sourceAC }}</td>
+                                    <td>{{ t.destinationAC }}</td>
+                                {% endif %}
+
+                                <td>&#8377; {{ t.amount }}</td>
+                                <td>{{ t.time }}</td>
+                                {% if t.completed %}
+                                    <td style="color: green">
+                                        YES
+                                    </td>
+                                {% else %}
+                                    <td style="color: red">
+                                        NO
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </form>
+                    </table>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -260,6 +325,23 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
     }
     window.onload = () => {
         $("#acbalance").text(insertCommas({{ details["balance"] }}));
+        {% if currenttab is defined %}
+            tabs = "{{currenttab}}".split('_');
+            taba = tabs[0];
+            tabb = tabs[1];
+            $.each($('.tab'), function(k, v) {
+                if (v.classList.contains("tab")) {
+                    if (v.getAttribute("tab") === taba)
+                        v.click();
+                }
+            });
+            $.each($('.horz-tab'), function(k, v) {
+                if (v.classList.contains('horz-tab')) {
+                    if (v.getAttribute('tab') === tabb)
+                        v.click();
+                }
+            });
+        {% endif %}
     }
 </script>
 {% endblock %}
