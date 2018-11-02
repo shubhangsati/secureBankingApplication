@@ -430,6 +430,11 @@ def creditMoney():
 @login_required
 @check_external
 def PIImod():
+    otp_result = verifyOTP()
+    if otp_result is not True:
+        flash(otp_result)
+    return redirect(url_for('index'))
+
     required = {
         'firstname': None,
         'lastname': None,

@@ -27,10 +27,11 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
             accountNumber=destination).allow_filtering().count() == 1
     else:
         f2 = True
+    critical = False
+    transactionF = None
     if check_amount(amt) and f1 and f2:
         amt = int(amt)
         flag = True
-        critical = False
         if amt >= 100000:
             critical = True
 
@@ -43,7 +44,6 @@ def createTransactionRecord(type, amt, destination, source="BANK"):
             approvalRequired=critical,
             completed=False)
 
-        transactionF = None
         if not critical:
             if type == 1:
                 transactionF = transfer(transaction)
