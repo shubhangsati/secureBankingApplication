@@ -64,6 +64,25 @@ def before_request():
         pass
 
 
+@app.before_request
+def before_request():
+    now = datetime.datetime.now()
+    try:
+        last_active = session['last_active']
+        delta = now - last_active
+        if delta.seconds > 900:
+            session['last_active'] = now
+            flash("Session expired")
+            return redirect(url_for("logout"))
+    except:
+        pass
+
+    try:
+        session['last_active'] = now
+    except:
+        pass
+
+
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
