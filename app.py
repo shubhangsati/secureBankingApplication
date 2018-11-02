@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, url_for, redirect, session, flash
 from functools import wraps
 from flask_socketio import SocketIO, emit
-from models import *
+from models import db, User
 from functions import *
 from io import BytesIO
 import hashlib
@@ -26,6 +26,24 @@ db.init_app(app)
 
 socketio = SocketIO(app)
 
+@app.before_request
+def before_request():
+    now = datetime.datetime.now()
+    try:
+        last_active = session['last_active']
+        delta = now - last_active
+        if delta.seconds > 20:
+            session['last_active'] = now
+            flash("Session expired")
+            return redirect(url_for("logout"))
+    except:
+        pass
+
+    try:
+        session['last_active'] = now
+    except:
+        pass
+
 
 def login_required(f):
     @wraps(f)
@@ -44,8 +62,6 @@ def check_external(f):
         if 'logged_in' in session and 'username' in session:
             if 'utype' in session and 'external' in session['utype']:
                 return f(*args, **kwargs)
-            else:
-                return redirect(url_for('internal'))
         else:
             flash('You need to login as external user.')
             return redirect(url_for("logout"))
@@ -57,9 +73,7 @@ def check_internal(f):
     def wrap(*args, **kwargs):
         if 'logged_in' in session and 'username' in session:
             if 'utype' in session and 'internal' in session['utype']:
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('index'))
+                return f(*args, **kwargs)   
         else:
             flash('You need to login as internal user.')
             return redirect(url_for("logout"))
@@ -100,9 +114,7 @@ def internal():
         flash('Two way authorization not completed. Login again.')
         destroy_session()
         return redirect(url_for('login'))
-    pt = fetchPendingTransactions()
-    piilist = viewPIIReq()
-    return render_template('internal.html', pt=pt, piilist=piilist)
+    return render_template('internal.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -302,11 +314,6 @@ def test():
 @login_required
 @check_external
 def quicktransfer():
-    otp_result = verifyOTP()
-    if otp_result is not True:
-        flash(otp_result)
-        return redirect(url_for('index'))
-        
     if 'destinationAC' in request.form:
         destinationAC = request.form['destinationAC']
     else:
@@ -321,6 +328,7 @@ def quicktransfer():
 
     user = User.objects(username=session['username'])[0]
     sourceAC = Account.objects(uid=user.uid).allow_filtering()[0]
+
     result = createTransactionRecord(1, amount, destinationAC,
                                      sourceAC.accountNumber)
     if not result[0]:
@@ -343,11 +351,6 @@ def quicktransfer():
 @login_required
 @check_external
 def debitMoney():
-    otp_result = verifyOTP()
-    if otp_result is not True:
-        flash(otp_result)
-        return redirect(url_for('index'))
-
     if 'amount' in request.form:
         amount = request.form['amount']
     else:
@@ -377,11 +380,6 @@ def debitMoney():
 @login_required
 @check_external
 def creditMoney():
-    otp_result = verifyOTP()
-    if otp_result is not True:
-        flash(otp_result)
-        return redirect(url_for('index'))
-
     if 'amount' in request.form:
         amount = request.form['amount']
     else:
@@ -476,7 +474,7 @@ def approvePII1():
     return redirect(url_for('internal'))
 
 
-@app.route('/viewTransactions', methods=['POST'])
+@app.route('/viewTransaction', methods=['POST'])
 @login_required
 @check_internal
 def viewTransaction():
@@ -484,55 +482,11 @@ def viewTransaction():
         acnumber = request.form['acnumber']
         viewtransactions = ViewTransactions(acnumber)
         # get transactions
-        pt = fetchPendingTransactions()
-        piilist = viewPIIReq()
-        return render_template('internal.html', pt=pt, piilist=piilist, vt=viewtransactions, tab="transactions")
-    else:
-        flash('Invalid')
-        return redirect(url_for('internal'))
-
-
-@app.route('/deleteUser', methods=['POST'])
-@login_required
-@check_internal
-def delUser():
-    otp_result = verifyOTP()
-    if otp_result is not True:
-        flash(otp_result)
-        return redirect(url_for('index'))
-
-    if 'acnumber' in request.form:
-        acnumber = request.form['acnumber']
-        account = Account.objects(accountNumber=acnumber)
-        userID = None
-        if account.count() > 0:
-            userID = account[0].uid
-        else:
-            flash('Invalid Input')
-            return redirect(url_for('internal'))
-        deleteUser(userID)
-        flashmessage = 'User with account number: ' + acnumber + ' has been deleted'
-        flash(flashmessage)
-        return redirect(url_for('internal'))
+        return render_template('internal', vt=viewtransactions)
     else:
         flash('Invalid')
         return redirect(url_for('internal'))
     return redirect(url_for('internal'))
-
-
-def verifyOTP():
-    if 'token' not in request.form:
-        return 'Enter OTP'
-    
-    otp = request.form['token']
-    secret = User.objects(username=session['username'])[0].otp_secret
-    totp = pyotp.TOTP(secret)
-    if not totp.verify(otp):
-        return 'Incorrect OTP'
-    
-    return True
-
-
 
 def is_int(n):
     try:
