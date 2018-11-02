@@ -144,7 +144,6 @@ def login():
         passInput = request.form['password']
         captcha_response = request.form['g-recaptcha-response']
         if verify_captcha(captcha_response):
-        if True:
             # get row from database
             row = models.User.objects(username=unameInput)
             # if row count is 0 or password input from form
@@ -557,11 +556,10 @@ def viewlast10transactions():
     if otp_result is not True:
         flash(otp_result)
         return redirect(url_for('index'))
-    
+
     userid = User.objects(username=session['username'])[0].uid
     acnumber = Account.objects(uid=userid).allow_filtering()[0].accountNumber
     allTransactions = ViewTransactions(acnumber)
-
 
     def compareTransactions(t1, t2):
         time1 = datetime.datetime.strptime(t1.time, '%c')
@@ -573,12 +571,12 @@ def viewlast10transactions():
         if time1 > time2:
             return 1
 
-
     allTransactions.sort(cmp=compareTransactions, reverse=True)
     last10transactions = allTransactions[:10]
     details = fetchUserDetails(session['username'])
-    return render_template("index.html", details=details, 
-    last10transactions=last10transactions, currenttab='transactions_last10transactions')
+    return render_template("index.html", details=details,
+                           last10transactions=last10transactions,
+                           currenttab='transactions_last10transactions')
 
 
 def verifyOTP():
