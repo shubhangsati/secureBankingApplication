@@ -63,10 +63,13 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                                     <td>Debit</td>
                                     <td>{{ t.destinationAC }}</td>
                                     <td>{{ t.sourceAC }}</td>
-                                {% endif %}
 
-                                {% if t.transactionType == 3 %}
+                                {% else %}
+                                    {% if t.transactionType == 1 %}
+                                    <td>Transfer</td>
+                                    {% else %}
                                     <td>Credit</td>
+                                    {% endif %}
                                     <td>{{ t.sourceAC }}</td>
                                     <td>{{ t.destinationAC }}</td>
                                 {% endif %}
@@ -123,6 +126,27 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                         </form>
                     </div>
                 </div>
+                {% if utype == "internal-C" %}
+                <div class="col-md-12">
+                    
+                    <table cellpadding="10px" cellspacing="5px">
+                        <tr>
+                            <td><h5 style="font-weight: bold;">Download All Transaction Log</h5></td>
+                        </tr>
+                    </table>
+                    <hr style="border: none; height: 5px; background: #D80027;">
+                    <div class="form-group">
+                        <form action="/downloadAllTransactionLogs" method="POST">
+                            
+                            <input class="form-control" type="text" id="token" 
+                            name="token" placeholder="OTP Token"> <br>
+    
+                            <input type="submit" class="btn btn-danger" style="width:100%;">
+                        </form>
+                    </div>
+
+                </div>
+                {% endif %}
                 {% if vt is defined %}
                     <div class="col-md-12">
                         <table cellpadding="10px" cellspacing="5px">
@@ -141,10 +165,13 @@ style="margin-top: 5%; background: rgba(0, 0, 0, 0.1); padding: 20px; border-rad
                                         <td>Debit</td>
                                         <td>{{ t.destinationAC }}</td>
                                         <td>{{ t.sourceAC }}</td>
-                                    {% endif %}
-    
-                                    {% if t.transactionType == 3 %}
+
+                                    {% else %}
+                                        {% if t.transactionType == 1 %}
+                                        <td>Transfer</td>
+                                        {% else %}
                                         <td>Credit</td>
+                                        {% endif %}
                                         <td>{{ t.sourceAC }}</td>
                                         <td>{{ t.destinationAC }}</td>
                                     {% endif %}

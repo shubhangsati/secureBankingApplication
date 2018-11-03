@@ -46,6 +46,18 @@ class Transaction(db.Model):
     approvalRequired = db.columns.Boolean(required=True)
     completed = db.columns.Boolean(required=True)
 
+    def __str__(self):
+        ttype = {1: 'Transfer', 2: 'Debit', 3: 'Credit'}
+        s, d = self.sourceAC, self.destinationAC
+        if self.transactionType == 2:
+            s, d = d, s
+        res = "ID = " + str(self.transactionId) + \
+            ", transactionType = " + ttype[self.transactionType]
+        res += ", source A/C = " + s + ", destination A/C = " + \
+            d + ", Amount = " + str(self.amount)
+        res += ", Time = " + self.time + ", completed = " + str(self.completed)
+        return res
+
 
 class PIIApproval(db.Model):
     uid = db.columns.UUID(primary_key=True, required=True)

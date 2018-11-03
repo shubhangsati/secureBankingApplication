@@ -1,5 +1,6 @@
 # imports
 from flask import Flask, render_template, request, url_for, redirect, session, flash
+from flask import send_file, abort
 from functools import wraps
 from flask_socketio import SocketIO, emit
 from models import *
@@ -64,6 +65,7 @@ def check_external(f):
             if 'utype' in session and 'external' in session['utype']:
                 return f(*args, **kwargs)
             else:
+                flash("Unreachable page")
                 return redirect(url_for('internal'))
         else:
             flash('You need to login as external user.')
@@ -78,6 +80,7 @@ def check_internal(f):
             if 'utype' in session and 'internal' in session['utype']:
                 return f(*args, **kwargs)
             else:
+                flash("Unreachable page")
                 return redirect(url_for('index'))
         else:
             flash('You need to login as internal user.')
@@ -121,7 +124,8 @@ def internal():
         return redirect(url_for('login'))
     pt = fetchPendingTransactions()
     piilist = viewPIIReq()
-    return render_template('internal.html', pt=pt, piilist=piilist)
+    return render_template('internal.html', pt=pt,
+                           piilist=piilist, utype=session['utype'])
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -510,7 +514,8 @@ def viewTransaction():
         pt = fetchPendingTransactions()
         piilist = viewPIIReq()
         return render_template(
-            'internal.html', pt=pt, piilist=piilist, vt=viewtransactions, tab="transactions")
+            'internal.html', pt=pt, piilist=piilist, vt=viewtransactions,
+            tab="transactions", utype=session['utype'])
     else:
         flash('Invalid')
         return redirect(url_for('internal'))
@@ -525,7 +530,7 @@ def delUser():
         flash(otp_result)
         return redirect(url_for('internal'))
 
-    if session['utype'] != 'externalC':
+    if session['utype'] != 'internal-C':
         flash('Function not allowed')
         return redirect(url_for('internal'))
 
@@ -577,6 +582,37 @@ def viewlast10transactions():
     return render_template("index.html", details=details,
                            last10transactions=last10transactions,
                            currenttab='transactions_last10transactions')
+
+
+@app.route('/downloadAllTransactionLogs', methods=['POST'])
+@login_required
+@check_internal
+def downloadAllTransactionLogs():
+    if session['utype'] != 'internal-C':
+        flash("operation not allowed")
+        return redirect(url_for("internal"))
+
+    otp_result = verifyOTP()
+    if otp_result is not True:
+        flash(otp_result)
+        return redirect(url_for('internal'))
+
+    from os import makedirs, path
+    from time import asctime
+    if not path.exists('./.logs'):
+        makedirs("./.logs")
+    filename = './.logs/transactionLog'
+    fout = open(filename, "w")
+    a = Transaction.objects()
+    for t in a:
+        fout.write(str(t) + "\r\n")
+    fout.close()
+
+    try:
+        return send_file(filename, as_attachment=True)
+    except Exception as e:
+        flash("Exception occurred: " + str(e))
+        return redirect(url_for("internal"))
 
 
 def verifyOTP():
