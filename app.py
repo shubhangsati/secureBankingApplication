@@ -18,7 +18,14 @@ from transactions import *
 # create a new Flask app
 app = Flask(__name__)
 # load configurations from config.py
-app.config.from_object("config.BaseConfig")
+#app.config.from_object("settings.BaseConfig")
+#app.config.from_envvar('APP_SETTINGS')
+app.config['DEBUG'] = False
+app.config['SECRET_KEY'] = "9u23hghhfeuhf0gbgrijwdaf32hf02ugt3h"
+app.config['SITE_KEY'] = "6LcSb3cUAAAAAF8NkmVESlCeODt-7F9qUmYaqKXy"
+app.config['CASSANDRA_HOSTS'] = ['127.0.0.1']
+app.config['CASSANDRA_KEYSPACE'] = 'SBS'
+
 # initialize database
 db.init_app(app)
 # app.secret_key = "random"
@@ -39,7 +46,7 @@ def before_request():
             flash("Session expired")
             return redirect(url_for("logout"))
     except BaseException:
-        pass
+	pass
 
     try:
         session['last_active'] = now
@@ -599,17 +606,19 @@ def downloadAllTransactionLogs():
 
     from os import makedirs, path
     from time import asctime
-    if not path.exists('./.logs'):
-        makedirs("./.logs")
-    filename = './.logs/transactionLog'
-    fout = open(filename, "w")
+    resultString = ""
+	
+    #if not path.exists('/home/iiitd/.logs'):
+    #    makedirs("/home/iiitd/.logs", 0777)
+    #filename = '/home/iiitd/.logs/transactionLog'
+    #fout = open(filename, "w")
     a = Transaction.objects()
-    for t in a:
-        fout.write(str(t) + "\r\n")
-    fout.close()
-
+    for t in range(len(a)):
+        resultString += "<b>Transaction #" + str(t) + " </b><br> " + str(a[t]) + "<br><br>"
+    
     try:
-        return send_file(filename, as_attachment=True)
+        #return send_file(filename, as_attachment=True)
+	return resultString
     except Exception as e:
         flash("Exception occurred: " + str(e))
         return redirect(url_for("internal"))

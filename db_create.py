@@ -13,9 +13,9 @@ db.create_keyspace_simple('SBS', 1)  # creates keyspace if does not exist
 
 db.sync_db()
 
-x1 = {
+x5 = {
     "username": "admin",
-    "password": "admin",
+    "password": "w7NkKa*XMCG6u2M@",
     "utype": "internal-C",
     "firstname": "Admin",
     "lastname": "Sati",
@@ -26,9 +26,9 @@ x1 = {
     "address": "Delhi",
     "phone": "9999999999"
 }
-x2 = {
+x6 = {
     "username": "admin1",
-    "password": "admin1",
+    "password": "PV3nil0vLDH*f*wV",
     "utype": "internal-B",
     "firstname": "Admin1",
     "lastname": "Sati",
@@ -39,9 +39,9 @@ x2 = {
     "address": "Delhi",
     "phone": "8888888888"
 }
-x3 = {
+x7 = {
     "username": "admin2",
-    "password": "admin2",
+    "password": "inLzG&cUlg&tGf-s",
     "utype": "internal-A",
     "firstname": "Admin2",
     "lastname": "Sati",
@@ -55,7 +55,7 @@ x3 = {
 
 x0 = {
     "username": "user",
-    "password": "user",
+    "password": "XOEDN@ofM$Mvu3bT",
     "utype": "external-A",
     "firstname": "User",
     "lastname": "Sharma",
@@ -67,9 +67,9 @@ x0 = {
     "phone": "0000000000"
 }
 
-x4 = {
+x1 = {
     "username": "user1",
-    "password": "user1",
+    "password": "dXu!Y38CgXHEeJR8",
     "utype": "external-A",
     "firstname": "User1",
     "lastname": "Paliwal",
@@ -81,9 +81,9 @@ x4 = {
     "phone": "9999999999"
 }
 
-x5 = {
+x2 = {
     "username": "user2",
-    "password": "user2",
+    "password": "K*zWug^f2!WDxqI6",
     "utype": "external-A",
     "firstname": "User2",
     "lastname": "Paliwal",
@@ -95,9 +95,9 @@ x5 = {
     "phone": "8888888888"
 }
 
-x6 = {
+x3 = {
     "username": "user3",
-    "password": "user3",
+    "password": "tohL#6uuQho!njEa",
     "utype": "external-A",
     "firstname": "user3",
     "lastname": "Paliwal",
@@ -109,9 +109,9 @@ x6 = {
     "phone": "7777777777"
 }
 
-x7 = {
+x4 = {
     "username": "user4",
-    "password": "user4",
+    "password": "AfVLMXcw6y#VkKp3",
     "utype": "external-A",
     "firstname": "user4",
     "lastname": "Paliwal",
@@ -123,63 +123,39 @@ x7 = {
     "phone": "6666666666"
 }
 
-x8 = {
-    "username": "user5",
-    "password": "user5",
+xA = {
+    "username": "uXX",
+    "password": "w7NkKa*XMCG1dsAGc",
     "utype": "external-A",
-    "firstname": "user5",
-    "lastname": "Paliwal",
-    "email": "user5@mail.com",
-    "AC": "66666",
-    "balance": 5000,
+    "firstname": "Shubhang",
+    "lastname": "Sati",
+    "email": "user@securebank.com",
+    "AC": "91824",
+    "balance": 1000,
     "branch": "Okhla",
     "address": "Delhi",
-    "phone": "5555555555"
+    "phone": "9999999499"
 }
 
-x9 = {
-    "username": "user6",
-    "password": "user6",
+xB = {
+    "username": "uYY",
+    "password": "w7NkKa*XMCG6u343",
     "utype": "external-A",
-    "firstname": "user6",
-    "lastname": "Paliwal",
-    "email": "user6@mail.com",
-    "AC": "77777",
-    "balance": 5000,
+    "firstname": "Kartik",
+    "lastname": "Mathur",
+    "email": "kartik@securebank.com",
+    "AC": "15125",
+    "balance": 1000,
     "branch": "Okhla",
     "address": "Delhi",
-    "phone": "4444444444"
+    "phone": "9992199999"
 }
 
-x10 = {
-    "username": "user7",
-    "password": "user7",
-    "utype": "external-A",
-    "firstname": "user7",
-    "lastname": "Paliwal",
-    "email": "user7@mail.com",
-    "AC": "88888",
-    "balance": 5000,
-    "branch": "Okhla",
-    "address": "Delhi",
-    "phone": "3333333333"
-}
 
-x11 = {
-    "username": "user8",
-    "password": "user8",
-    "utype": "external-A",
-    "firstname": "user8",
-    "lastname": "Paliwal",
-    "email": "user8@mail.com",
-    "AC": "99999",
-    "balance": 5000,
-    "branch": "Okhla",
-    "address": "Delhi",
-    "phone": "2222222222"
-}
+ulist = [x0, x1, x2, x3, x4, x5, x6, x7]
 
-ulist = [x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11]
+createUser(xA)
+createUser(xB)
 
 # if there is not already a user with username admin
 # create a user with username admin and password = sha256("admin")

@@ -1,0 +1,8 @@
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/sbs/")
+
+import  as application
+application.secret_key="9u23hghhfeuhf0gbgrijwdaf32hf02ugt3h"
